@@ -1,0 +1,192 @@
+[gd_scene format=3 uid="uid://cn81emxdqffxv"]
+
+[ext_resource type="FontFile" uid="uid://vixo2pduht0v" path="res://assets/fonts/Eirian.ttf" id="1_02ppr"]
+
+[sub_resource type="Shader" id="Shader_02ppr"]
+code = "shader_type canvas_item;
+
+uniform vec2 pixelation = vec2(256, 256); //The resolution of the Texture
+uniform sampler2D cloud_noise1; //The first scroling noise for the clouds
+uniform vec2 scroll_speed1 = vec2(0.02, 0.007); //The scroll-speed of the first noise
+uniform sampler2D cloud_noise2; //The second scroling noise for the clouds
+uniform vec2 scroll_speed2 = vec2(-0.015, -0.004); //The scroll-speed of the second noise
+uniform vec2 center_pos = vec2(0.5, 0.0); //The position, the clouds are bend around
+uniform float position_impact : hint_range(0.0, 1.0, 0.01) = 0.75;
+uniform sampler2D color_gardient; //The colors of the cloud-sky-transition as a 1D-Gradient (set interpolation to constant for more pixel look)
+
+void fragment() {
+	//The pixelated UV (so that the texture is actually pixelart)
+	vec2 pixel_uv = floor(UV * pixelation) / pixelation;
+	//Makes sure the clouds aren't stretched, even if it's not square shaped
+	vec2 noise_uv_scale = pixel_uv;
+	noise_uv_scale.x *= pixelation.x / pixelation.y;
+	//The UVs inside the noise texture with time-offset
+	vec2 noise1uv = fract(noise_uv_scale + TIME * scroll_speed1);
+	vec2 noise2uv = fract(noise_uv_scale + TIME * scroll_speed2);
+	//Determents the average color of the two noises
+	vec4 noise_col = (texture(cloud_noise1, noise1uv) + texture(cloud_noise2, noise2uv)) * 0.5;
+	//The pixels distance to the center
+	float dist = distance(pixel_uv, center_pos);
+	//Scales the distance to a range between 0 and 1
+	vec2 furthest = vec2(-min(sign(center_pos.x - 0.5), 0.0), -min(sign(center_pos.y - 0.5), 0.0));
+	float max_dist = distance(center_pos, furthest);
+	dist /= max_dist;
+	//Mixes the noise color with the distance to get noise that warps around the center
+	float final = mix(1.0-noise_col.r, dist, position_impact);
+	//applies the color from the gradient
+	COLOR = texture(color_gardient, vec2(final, final));
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eotx8"]
+noise_type = 3
+fractal_type = 3
+fractal_lacunarity = 5.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x8522"]
+noise = SubResource("FastNoiseLite_eotx8")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_olh0b"]
+noise_type = 0
+fractal_type = 0
+domain_warp_enabled = true
+domain_warp_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_u03e6"]
+noise = SubResource("FastNoiseLite_olh0b")
+
+[sub_resource type="Gradient" id="Gradient_2f5gb"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.14179105, 0.67164177, 0.9104478, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.33178717, 0.23743707, 0.050342835, 1, 0, 0, 0, 1, 0.19180623, 0.51537216, 0.79549867, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ov7a8"]
+gradient = SubResource("Gradient_2f5gb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eotx8"]
+shader = SubResource("Shader_02ppr")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_x8522")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/cloud_noise2 = SubResource("NoiseTexture2D_u03e6")
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0.5)
+shader_parameter/position_impact = 0.3999999910592
+shader_parameter/color_gardient = SubResource("GradientTexture1D_ov7a8")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02ppr"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.19215687, 0.5137255, 0.79607844, 1)
+border_blend = true
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+
+[sub_resource type="Theme" id="Theme_eotx8"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_02ppr")
+
+[sub_resource type="LabelSettings" id="LabelSettings_eotx8"]
+font = ExtResource("1_02ppr")
+font_size = 32
+font_color = Color(0.19215687, 0.5137255, 0.79607844, 1)
+outline_size = 2
+outline_color = Color(0.19215687, 0.5137255, 0.79607844, 1)
+
+[sub_resource type="Shader" id="Shader_eotx8"]
+code = "shader_type canvas_item;
+
+uniform vec2 pixelation = vec2(256, 256); //The resolution of the Texture
+uniform sampler2D cloud_noise1; //The first scroling noise for the clouds
+uniform vec2 scroll_speed1 = vec2(0.02, 0.007); //The scroll-speed of the first noise
+uniform sampler2D cloud_noise2; //The second scroling noise for the clouds
+uniform vec2 scroll_speed2 = vec2(-0.015, -0.004); //The scroll-speed of the second noise
+uniform vec2 center_pos = vec2(0.5, 0.0); //The position, the clouds are bend around
+uniform float position_impact : hint_range(0.0, 1.0, 0.01) = 0.75;
+uniform sampler2D color_gardient; //The colors of the cloud-sky-transition as a 1D-Gradient (set interpolation to constant for more pixel look)
+
+void fragment() {
+	//The pixelated UV (so that the texture is actually pixelart)
+	vec2 pixel_uv = floor(UV * pixelation) / pixelation;
+	//Makes sure the clouds aren't stretched, even if it's not square shaped
+	vec2 noise_uv_scale = pixel_uv;
+	noise_uv_scale.x *= pixelation.x / pixelation.y;
+	//The UVs inside the noise texture with time-offset
+	vec2 noise1uv = fract(noise_uv_scale + TIME * scroll_speed1);
+	vec2 noise2uv = fract(noise_uv_scale + TIME * scroll_speed2);
+	//Determents the average color of the two noises
+	vec4 noise_col = (texture(cloud_noise1, noise1uv) + texture(cloud_noise2, noise2uv)) * 0.5;
+	//The pixels distance to the center
+	float dist = distance(pixel_uv, center_pos);
+	//Scales the distance to a range between 0 and 1
+	vec2 furthest = vec2(-min(sign(center_pos.x - 0.5), 0.0), -min(sign(center_pos.y - 0.5), 0.0));
+	float max_dist = distance(center_pos, furthest);
+	dist /= max_dist;
+	//Mixes the noise color with the distance to get noise that warps around the center
+	float final = mix(1.0-noise_col.r, dist, position_impact);
+	//applies the color from the gradient
+	COLOR = texture(color_gardient, vec2(final, final));
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_x8522"]
+interpolation_mode = 2
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.14179105, 0.67164177, 0.9104478, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.33333334, 0.23921569, 0.050980393, 0.627451, 0, 0, 0, 0, 0.19180623, 0.51537216, 0.79549867, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_olh0b"]
+gradient = SubResource("Gradient_x8522")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u03e6"]
+shader = SubResource("Shader_eotx8")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_x8522")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/cloud_noise2 = SubResource("NoiseTexture2D_u03e6")
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0.5)
+shader_parameter/position_impact = 0.3999999910592
+shader_parameter/color_gardient = SubResource("GradientTexture1D_olh0b")
+
+[node name="Node2D" type="Node2D" unique_id=609156715]
+
+[node name="wallpaper" type="ColorRect" parent="." unique_id=967680888]
+material = SubResource("ShaderMaterial_eotx8")
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="console" type="PanelContainer" parent="." unique_id=1263565434]
+custom_minimum_size = Vector2(1000, 1000)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 460.0
+offset_top = 40.0
+offset_right = 1460.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_eotx8")
+
+[node name="Label" type="Label" parent="console" unique_id=721977037]
+layout_mode = 2
+text = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu purus sed orci pellentesque fermentum. Nunc vitae vehicula dui, vel molestie mi. Pellentesque sed mattis nulla, eu mollis massa. Sed vestibulum ultrices maximus. Nulla elementum, mi eu maximus pulvinar, libero sem aliquet libero, condimentum rhoncus erat metus id lorem. Nam nisi mi, volutpat quis eros sed, congue tincidunt nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla facilisi. Donec convallis leo sem, vel rutrum sem ultricies sit amet. Proin sed magna dictum, auctor justo quis, elementum magna. Vivamus tincidunt nisl justo, non venenatis orci semper pretium. Aliquam efficitur imperdiet blandit. Nunc convallis congue dignissim. Phasellus quis erat tellus. Integer consectetur nulla vel ex dapibus cursus.
+
+Nunc ac dolor ut nibh sollicitudin ultrices pharetra sit amet leo. Quisque vitae pellentesque nisi. Pellentesque porttitor odio non nunc commodo, eget vulputate libero pharetra. Donec eleifend sollicitudin nisi ac semper. In vehicula semper vestibulum. Aliquam vitae lacus at sapien suscipit pulvinar eu a elit. Sed volutpat venenatis magna eget cursus. Vivamus 
+aiaiaiaia
+aiaiaiai"
+label_settings = SubResource("LabelSettings_eotx8")
+autowrap_mode = 2
+
+[node name="frontpaper" type="ColorRect" parent="." unique_id=2021659623]
+material = SubResource("ShaderMaterial_u03e6")
+offset_left = 2.0
+offset_top = -2.0
+offset_right = 1922.0
+offset_bottom = 1078.0
