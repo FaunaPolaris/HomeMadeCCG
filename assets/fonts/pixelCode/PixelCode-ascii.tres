@@ -1,0 +1,12 @@
+[gd_resource type="FontVariation" format=3 uid="uid://u8p75juxej0k"]
+
+[ext_resource type="FontFile" uid="uid://bty1pp6s8t50f" path="res://assets/fonts/pixelCode/PixelCode.ttf" id="1_n4uuk"]
+
+[resource]
+base_font = ExtResource("1_n4uuk")
+opentype_features = {
+1818847073: 0
+}
+spacing_glyph = 3
+spacing_top = -6
+spacing_bottom = -6

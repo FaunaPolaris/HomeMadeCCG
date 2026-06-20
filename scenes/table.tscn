@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://cn81emxdqffxv"]
 
-[ext_resource type="FontFile" uid="uid://vixo2pduht0v" path="res://assets/fonts/Eirian.ttf" id="1_02ppr"]
+[ext_resource type="Theme" uid="uid://b05kbn1v18iy7" path="res://resources/panelContainers/Console.tres" id="1_u03e6"]
+[ext_resource type="PackedScene" uid="uid://bwaxvl5nbk8a3" path="res://scenes/character.tscn" id="2_x8522"]
+[ext_resource type="LabelSettings" uid="uid://bufbiram7higc" path="res://resources/labelSettings/textBlock.tres" id="3_x8522"]
+[ext_resource type="LabelSettings" uid="uid://bi0pcwkrke2k2" path="res://resources/labelSettings/acii.tres" id="4_olh0b"]
 
 [sub_resource type="Shader" id="Shader_02ppr"]
 code = "shader_type canvas_item;
@@ -75,29 +78,6 @@ shader_parameter/center_pos = Vector2(0.5, 0.5)
 shader_parameter/position_impact = 0.3999999910592
 shader_parameter/color_gardient = SubResource("GradientTexture1D_ov7a8")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02ppr"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 12
-border_width_top = 12
-border_width_right = 12
-border_width_bottom = 12
-border_color = Color(0.19215687, 0.5137255, 0.79607844, 1)
-border_blend = true
-expand_margin_left = 6.0
-expand_margin_top = 6.0
-expand_margin_right = 6.0
-expand_margin_bottom = 6.0
-
-[sub_resource type="Theme" id="Theme_eotx8"]
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_02ppr")
-
-[sub_resource type="LabelSettings" id="LabelSettings_eotx8"]
-font = ExtResource("1_02ppr")
-font_size = 32
-font_color = Color(0.19215687, 0.5137255, 0.79607844, 1)
-outline_size = 2
-outline_color = Color(0.19215687, 0.5137255, 0.79607844, 1)
-
 [sub_resource type="Shader" id="Shader_eotx8"]
 code = "shader_type canvas_item;
 
@@ -155,38 +135,188 @@ shader_parameter/position_impact = 0.3999999910592
 shader_parameter/color_gardient = SubResource("GradientTexture1D_olh0b")
 
 [node name="Node2D" type="Node2D" unique_id=609156715]
+texture_filter = 1
 
 [node name="wallpaper" type="ColorRect" parent="." unique_id=967680888]
 material = SubResource("ShaderMaterial_eotx8")
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="console" type="PanelContainer" parent="." unique_id=1263565434]
-custom_minimum_size = Vector2(1000, 1000)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 460.0
-offset_top = 40.0
-offset_right = 1460.0
-offset_bottom = 1040.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_eotx8")
+[node name="margin" type="MarginContainer" parent="." unique_id=1932066964]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="Label" type="Label" parent="console" unique_id=721977037]
+[node name="divider" type="HBoxContainer" parent="margin" unique_id=505492219]
 layout_mode = 2
-text = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eu purus sed orci pellentesque fermentum. Nunc vitae vehicula dui, vel molestie mi. Pellentesque sed mattis nulla, eu mollis massa. Sed vestibulum ultrices maximus. Nulla elementum, mi eu maximus pulvinar, libero sem aliquet libero, condimentum rhoncus erat metus id lorem. Nam nisi mi, volutpat quis eros sed, congue tincidunt nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla facilisi. Donec convallis leo sem, vel rutrum sem ultricies sit amet. Proin sed magna dictum, auctor justo quis, elementum magna. Vivamus tincidunt nisl justo, non venenatis orci semper pretium. Aliquam efficitur imperdiet blandit. Nunc convallis congue dignissim. Phasellus quis erat tellus. Integer consectetur nulla vel ex dapibus cursus.
+theme_override_constants/separation = -2
 
-Nunc ac dolor ut nibh sollicitudin ultrices pharetra sit amet leo. Quisque vitae pellentesque nisi. Pellentesque porttitor odio non nunc commodo, eget vulputate libero pharetra. Donec eleifend sollicitudin nisi ac semper. In vehicula semper vestibulum. Aliquam vitae lacus at sapien suscipit pulvinar eu a elit. Sed volutpat venenatis magna eget cursus. Vivamus 
-aiaiaiaia
-aiaiaiai"
-label_settings = SubResource("LabelSettings_eotx8")
+[node name="teamMembers" type="VBoxContainer" parent="margin/divider" unique_id=86562717]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="1" type="PanelContainer" parent="margin/divider/teamMembers" unique_id=1263565434]
+custom_minimum_size = Vector2(563, 0)
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="character" parent="margin/divider/teamMembers/1" unique_id=1180562277 instance=ExtResource("2_x8522")]
+layout_mode = 2
+
+[node name="2" type="PanelContainer" parent="margin/divider/teamMembers" unique_id=795550100]
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="character" parent="margin/divider/teamMembers/2" unique_id=195392697 instance=ExtResource("2_x8522")]
+layout_mode = 2
+
+[node name="3" type="PanelContainer" parent="margin/divider/teamMembers" unique_id=940233031]
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="character" parent="margin/divider/teamMembers/3" unique_id=1531534149 instance=ExtResource("2_x8522")]
+layout_mode = 2
+
+[node name="feed" type="PanelContainer" parent="margin/divider/teamMembers" unique_id=40977991]
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="text" type="Label" parent="margin/divider/teamMembers/feed" unique_id=1488291051]
+custom_minimum_size = Vector2(559, 0)
+layout_mode = 2
+text = "I can't use this item, it can only be equip to either dragon or undead creatures."
+label_settings = ExtResource("3_x8522")
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
+max_lines_visible = 6
+visible_characters = 311
+visible_ratio = 3.8395061
+
+[node name="enemies" type="VBoxContainer" parent="margin/divider" unique_id=680954411]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="1" type="PanelContainer" parent="margin/divider/enemies" unique_id=882410685]
+custom_minimum_size = Vector2(563, 0)
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="character" parent="margin/divider/enemies/1" unique_id=1370855431 instance=ExtResource("2_x8522")]
+layout_mode = 2
+
+[node name="2" type="PanelContainer" parent="margin/divider/enemies" unique_id=1699867286]
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="character" parent="margin/divider/enemies/2" unique_id=1274330667 instance=ExtResource("2_x8522")]
+layout_mode = 2
+
+[node name="3" type="PanelContainer" parent="margin/divider/enemies" unique_id=1627324653]
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="character" parent="margin/divider/enemies/3" unique_id=1074640621 instance=ExtResource("2_x8522")]
+layout_mode = 2
+
+[node name="feed" type="PanelContainer" parent="margin/divider/enemies" unique_id=1397757864]
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="text" type="Label" parent="margin/divider/enemies/feed" unique_id=1163328721]
+custom_minimum_size = Vector2(559, 0)
+layout_mode = 2
+text = "I can't use this item, it can only be equip to either dragon or undead creatures."
+label_settings = ExtResource("3_x8522")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+max_lines_visible = 6
+
+[node name="information" type="VBoxContainer" parent="margin/divider" unique_id=1892770898]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="world" type="HBoxContainer" parent="margin/divider/information" unique_id=1678682894]
+layout_mode = 2
+
+[node name="map" type="PanelContainer" parent="margin/divider/information/world" unique_id=1623242698]
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="margin" type="MarginContainer" parent="margin/divider/information/world/map" unique_id=995940259]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="text" type="Label" parent="margin/divider/information/world/map/margin" unique_id=45634527]
+custom_minimum_size = Vector2(559, 0)
+layout_mode = 2
+text = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+"
+label_settings = ExtResource("4_olh0b")
+horizontal_alignment = 1
+vertical_alignment = 1
+max_lines_visible = 32
+
+[node name="inventory" type="PanelContainer" parent="margin/divider/information" unique_id=1850151698]
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+theme = ExtResource("1_u03e6")
+
+[node name="text" type="Label" parent="margin/divider/information/inventory" unique_id=894468144]
+custom_minimum_size = Vector2(559, 0)
+layout_mode = 2
+text = "I can't use this item, it can only be equip to either dragon or undead creatures."
+label_settings = ExtResource("3_x8522")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+max_lines_visible = 6
 
 [node name="frontpaper" type="ColorRect" parent="." unique_id=2021659623]
 material = SubResource("ShaderMaterial_u03e6")
-offset_left = 2.0
-offset_top = -2.0
-offset_right = 1922.0
-offset_bottom = 1078.0
+offset_right = 1920.0
+offset_bottom = 1080.0
