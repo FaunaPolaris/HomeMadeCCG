@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bdu40nrmmxdpv"]
+
+[ext_resource type="Texture2D" uid="uid://f7bcjx5cxiwo" path="res://assets/interface/fullScreen.png" id="1_7fvvs"]
+[ext_resource type="Shader" uid="uid://bkxddtwrkqf6k" path="res://resources/shaders/ditheing.gdshader" id="2_kusfh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_barbo"]
+shader = ExtResource("2_kusfh")
+shader_parameter/resolution = Vector2(640, 360)
+shader_parameter/scan_line_amount = 0.10000000475
+shader_parameter/warp_amount = 0.0
+shader_parameter/vignette_amount = 0.750000035625
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.10000000475
+shader_parameter/brightness_boost = 1.2
+
+[node name="main screen" type="Node2D" unique_id=1814321988]
+texture_filter = 1
+
+[node name="interface skeleton" type="Sprite2D" parent="." unique_id=848521970]
+position = Vector2(320, 180)
+texture = ExtResource("1_7fvvs")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=785868584]
+material = SubResource("ShaderMaterial_barbo")
+offset_right = 640.0
+offset_bottom = 360.0
