@@ -1,8 +1,0 @@
-[gd_resource type="LabelSettings" format=3 uid="uid://cbceaxwmpv3wd"]
-
-[ext_resource type="FontFile" uid="uid://j5qw4c5vscbs" path="res://assets/fonts/pixelCode/PixelCode-Bold.ttf" id="1_advfd"]
-
-[resource]
-font = ExtResource("1_advfd")
-font_size = 20
-font_color = Color(0.19215687, 0.5137255, 0.79607844, 1)

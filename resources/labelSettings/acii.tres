@@ -1,8 +1,0 @@
-[gd_resource type="LabelSettings" format=3 uid="uid://bi0pcwkrke2k2"]
-
-[ext_resource type="FontVariation" uid="uid://u8p75juxej0k" path="res://assets/fonts/pixelCode/PixelCode-ascii.tres" id="1_2i0g7"]
-
-[resource]
-line_spacing = 2.0
-font = ExtResource("1_2i0g7")
-font_color = Color(0.19215687, 0.5137255, 0.79607844, 1)
