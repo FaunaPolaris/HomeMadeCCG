@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://f7bcjx5cxiwo" path="res://assets/interface/fullScreen.png" id="1_7fvvs"]
 [ext_resource type="Shader" uid="uid://bkxddtwrkqf6k" path="res://resources/shaders/ditheing.gdshader" id="2_kusfh"]
+[ext_resource type="PackedScene" uid="uid://das8ust08qhbe" path="res://scenes/Card.tscn" id="4_lushf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_barbo"]
 shader = ExtResource("2_kusfh")
@@ -15,6 +16,7 @@ shader_parameter/brightness_boost = 1.2
 
 [node name="main screen" type="Node2D" unique_id=1814321988]
 texture_filter = 1
+scale = Vector2(3, 3)
 
 [node name="interface skeleton" type="Sprite2D" parent="." unique_id=848521970]
 position = Vector2(320, 180)
@@ -24,3 +26,28 @@ texture = ExtResource("1_7fvvs")
 material = SubResource("ShaderMaterial_barbo")
 offset_right = 640.0
 offset_bottom = 360.0
+
+[node name="board2" type="GridContainer" parent="." unique_id=1279949097]
+offset_left = 401.0
+offset_top = 131.0
+offset_right = 555.0
+offset_bottom = 239.0
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6
+columns = 4
+
+[node name="card" parent="board2" unique_id=977773174 instance=ExtResource("4_lushf")]
+
+[node name="card2" parent="board2" unique_id=114681778 instance=ExtResource("4_lushf")]
+
+[node name="card3" parent="board2" unique_id=917958860 instance=ExtResource("4_lushf")]
+
+[node name="card4" parent="board2" unique_id=116153836 instance=ExtResource("4_lushf")]
+
+[node name="card5" parent="board2" unique_id=1845934609 instance=ExtResource("4_lushf")]
+
+[node name="card6" parent="board2" unique_id=563519921 instance=ExtResource("4_lushf")]
+
+[node name="card7" parent="board2" unique_id=1560286660 instance=ExtResource("4_lushf")]
+
+[node name="card8" parent="board2" unique_id=456624028 instance=ExtResource("4_lushf")]

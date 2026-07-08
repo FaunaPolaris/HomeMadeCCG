@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://das8ust08qhbe"]
+
+[ext_resource type="Script" uid="uid://cd758dkq6t3iq" path="res://source/Card.gd" id="1_tgmmg"]
+[ext_resource type="Texture2D" uid="uid://b4rjh36f7wott" path="res://assets/interface/card/frame/card_frame.png" id="2_4dx8l"]
+[ext_resource type="FontFile" uid="uid://dvv8ymla4o4bl" path="res://assets/fonts/TinyPixels.png" id="2_qf083"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barbo"]
+size = Vector2(32, 50)
+
+[sub_resource type="LabelSettings" id="LabelSettings_barbo"]
+line_spacing = 1.0
+font = ExtResource("2_qf083")
+font_size = 4
+
+[node name="card" type="Node2D" unique_id=1773072902]
+texture_filter = 1
+script = ExtResource("1_tgmmg")
+
+[node name="area" type="Area2D" parent="." unique_id=164392027]
+
+[node name="shape" type="CollisionShape2D" parent="area" unique_id=1314683014]
+position = Vector2(17, 25)
+shape = SubResource("RectangleShape2D_barbo")
+
+[node name="border" type="Sprite2D" parent="." unique_id=223110140]
+texture = ExtResource("2_4dx8l")
+centered = false
+
+[node name="stats" type="HBoxContainer" parent="." unique_id=1652611929]
+offset_left = -5.0
+offset_top = 30.0
+offset_right = 39.0
+offset_bottom = 38.0
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="attack" type="Label" parent="stats" unique_id=1322872011]
+layout_mode = 2
+text = "00"
+label_settings = SubResource("LabelSettings_barbo")
+
+[node name="defense" type="Label" parent="stats" unique_id=1797281809]
+layout_mode = 2
+text = "00"
+label_settings = SubResource("LabelSettings_barbo")
+
+[connection signal="mouse_entered" from="area" to="." method="_on_area_mouse_entered"]
+[connection signal="mouse_exited" from="area" to="." method="_on_area_mouse_exited"]
