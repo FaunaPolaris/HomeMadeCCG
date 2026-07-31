@@ -251,7 +251,6 @@ script = ExtResource("1_dqkch")
 
 [node name="pupil" type="AnimatedSprite2D" parent="." unique_id=679342579]
 sprite_frames = SubResource("SpriteFrames_barbo")
-animation = &"right>center"
 autoplay = "default"
 
 [node name="tentacles" type="AnimatedSprite2D" parent="." unique_id=1465056962]
