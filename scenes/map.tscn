@@ -1,0 +1,28 @@
+[gd_scene format=4 uid="uid://djsy7etd1m3mx"]
+
+[ext_resource type="Script" uid="uid://81pegqvg2b3h" path="res://script/map/Map.gd" id="1_0cso3"]
+[ext_resource type="TileSet" uid="uid://bp3aso8bkba0q" path="res://assets/map/tiles/biome_tileset.tres" id="1_paxxb"]
+[ext_resource type="TileSet" uid="uid://oboe0lrjeey8" path="res://assets/map/tiles/building_tileset.tres" id="2_gldc4"]
+[ext_resource type="Texture2D" uid="uid://chh0ox6a53egt" path="res://assets/map/display_map.png" id="4_nakos"]
+
+[node name="map" type="Node2D" unique_id=675885628]
+texture_filter = 1
+script = ExtResource("1_0cso3")
+
+[node name="floor" type="TileMapLayer" parent="." unique_id=400682956]
+position = Vector2(304, 164)
+tile_map_data = PackedByteArray("AAD//wAAAgABAAEAAAD9////AgAAAAEAAAD9/wEAAgAAAAEAAAD9/wAAAgAAAAEAAAD+/wAAAgABAAEAAAD+////AgABAAEAAAD/////AgABAAEAAAABAP//AgABAAEAAAABAP7/AgABAAAAAAACAP7/AgABAAAAAAADAP7/AgACAAAAAAADAP//AgACAAEAAAACAP//AgABAAEAAAACAAAAAgABAAEAAAADAAAAAgACAAEAAAABAAAAAgABAAEAAAABAAEAAgABAAEAAAAAAAEAAgABAAEAAAD//wEAAgABAAEAAAD+/wEAAgABAAEAAAD9/wIAAgAAAAIAAAD+/wIAAgABAAIAAAD//wIAAgABAAIAAAAAAAIAAgABAAIAAAABAAIAAgABAAIAAAACAAIAAgABAAIAAAADAAIAAgACAAIAAAADAAEAAgACAAEAAAACAAEAAgABAAEAAAAAAP7/AgABAAAAAAD///7/AgABAAAAAAD+//7/AgABAAAAAAD9//7/AgAAAAAAAAD8/wIAAgADAAEAAAD8/wEAAgADAAEAAAD8/wAAAgADAAEAAAD8////AgADAAEAAAD8//7/AgADAAEAAAD8//3/AgADAAEAAAD9//3/AgADAAEAAAD+//3/AgADAAEAAAD///3/AgADAAEAAAAAAP3/AgADAAEAAAABAP3/AgADAAEAAAACAP3/AgADAAEAAAADAP3/AgADAAEAAAAEAP3/AgADAAEAAAAEAP7/AgADAAEAAAAEAP//AgADAAEAAAAEAAAAAgADAAEAAAAEAAEAAgADAAEAAAAEAAIAAgADAAEAAAAEAAMAAgADAAEAAAADAAMAAgADAAEAAAACAAMAAgADAAEAAAABAAMAAgADAAEAAAAAAAMAAgADAAEAAAD//wMAAgADAAEAAAD+/wMAAgADAAEAAAD9/wMAAgADAAEAAAD8/wMAAgADAAEAAAAAAP//AgABAAEAAAA=")
+tile_set = ExtResource("1_paxxb")
+
+[node name="folliage" type="TileMapLayer" parent="." unique_id=1982052472]
+position = Vector2(304, 164)
+tile_set = ExtResource("1_paxxb")
+
+[node name="building" type="TileMapLayer" parent="." unique_id=1425939133]
+position = Vector2(304, 164)
+tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAD//wAAAAAAAAEAAAD//wEAAAAAAAIAAAAAAP//AAABAAAAAAAAAAAAAAABAAEAAAAAAAEAAAABAAIAAAABAP//AAACAAAAAAABAAAAAAACAAEAAAABAAEAAAACAAIAAAA=")
+tile_set = ExtResource("2_gldc4")
+
+[node name="skeleton" type="Sprite2D" parent="." unique_id=1482573708]
+position = Vector2(320, 180)
+texture = ExtResource("4_nakos")

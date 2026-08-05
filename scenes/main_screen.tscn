@@ -1,12 +1,9 @@
-[gd_scene format=4 uid="uid://bdu40nrmmxdpv"]
+[gd_scene format=3 uid="uid://bdu40nrmmxdpv"]
 
 [ext_resource type="Texture2D" uid="uid://f7bcjx5cxiwo" path="res://assets/interface/fullScreen.png" id="1_7fvvs"]
 [ext_resource type="Shader" uid="uid://by0kyii641h7y" path="res://resources/shaders/clouds.gdshader" id="1_kusfh"]
-[ext_resource type="Texture2D" uid="uid://djujkmdcwmb2h" path="res://assets/map/tiles/tree.png" id="3_23dc1"]
-[ext_resource type="Texture2D" uid="uid://djkqdnglteaua" path="res://assets/map/tiles/temple.png" id="3_a46j4"]
-[ext_resource type="PackedScene" uid="uid://cw8ikblukwfab" path="res://scenes/player.tscn" id="3_aum10"]
-[ext_resource type="Texture2D" uid="uid://chh0ox6a53egt" path="res://assets/map/display_map.png" id="4_lushf"]
-[ext_resource type="Texture2D" uid="uid://hybm8gm7imyb" path="res://assets/map/tiles/bloom.png" id="4_w87pm"]
+[ext_resource type="Script" uid="uid://c3kak3pssd0um" path="res://script/map_screen.gd" id="1_lushf"]
+[ext_resource type="PackedScene" uid="uid://djsy7etd1m3mx" path="res://scenes/map.tscn" id="2_lushf"]
 
 [sub_resource type="Gradient" id="Gradient_lushf"]
 offsets = PackedFloat32Array(0.1456693, 0.16929133, 0.22047244, 0.22834645, 0.42125985, 0.46456692, 0.5511811, 0.8543307)
@@ -60,47 +57,10 @@ shader_parameter/center_pos = Vector2(0.5, 0.5)
 shader_parameter/position_impact = 0.75
 shader_parameter/color_gardient = SubResource("GradientTexture1D_il54y")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a46j4"]
-texture = ExtResource("4_w87pm")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-0:0/0/terrain = 0
-1:0/0 = 0
-1:0/0/terrain = 0
-1:0/0/probability = 0.2
-2:0/0 = 0
-2:0/0/terrain = 0
-2:0/0/probability = 0.2
-3:0/0 = 0
-3:0/0/terrain = 0
-3:0/0/probability = 0.1
-4:0/0 = 0
-4:0/0/terrain = 0
-4:0/0/probability = 0.1
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_il54y"]
-texture = ExtResource("3_23dc1")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_barbo"]
-tile_size = Vector2i(32, 32)
-occlusion_layer_0/light_mask = 1
-sources/0 = SubResource("TileSetAtlasSource_a46j4")
-sources/1 = SubResource("TileSetAtlasSource_il54y")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_23dc1"]
-texture = ExtResource("3_a46j4")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_6q7oa"]
-tile_size = Vector2i(32, 32)
-sources/0 = SubResource("TileSetAtlasSource_23dc1")
-
-[node name="main screen" type="Node2D" unique_id=1814321988]
+[node name="map screen" type="Node2D" unique_id=1814321988]
 texture_filter = 1
 scale = Vector2(3, 3)
+script = ExtResource("1_lushf")
 
 [node name="background" type="ColorRect" parent="." unique_id=785868584]
 material = SubResource("ShaderMaterial_barbo")
@@ -108,30 +68,9 @@ offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0.08456469, 0.08161908, 0.18327162, 1)
 
-[node name="map" type="Node2D" parent="." unique_id=1597703101]
-
-[node name="floor" type="TileMapLayer" parent="map" unique_id=267912576]
-position = Vector2(304, 164)
-tile_map_data = PackedByteArray("AAD//wAAAAAAAAAAAAD9////AAAAAAAAAAD9/wEAAAAAAAAAAAD9/wAAAAAAAAAAAAD+/wAAAAAAAAAAAAD+////AAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAABAP7/AAAAAAAAAAACAP7/AAAAAAAAAAADAP7/AAAAAAAAAAADAP//AAAAAAAAAAACAP//AAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAD//wEAAAAAAAAAAAD+/wEAAAAAAAAAAAD9/wIAAAAAAAAAAAD+/wIAAAAAAAAAAAD//wIAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAADAAEAAAAAAAAAAAACAAEAAAAAAAAAAAAAAP7/AAAAAAAAAAD///7/AAAAAAAAAAD+//7/AAAAAAAAAAD9//7/AAAAAAAAAAA=")
-tile_set = SubResource("TileSet_barbo")
-
-[node name="folliage" type="TileMapLayer" parent="map" unique_id=22517645]
-position = Vector2(304, 164)
-tile_map_data = PackedByteArray("AAD+/wAAAQAAAAAAAAABAP//AQAAAAAAAAD///7/AQAAAAAAAAACAAAAAQAAAAAAAAACAP//AQAAAAAAAAD//wEAAQAAAAAAAAD9//7/AQAAAAAAAAADAAIAAQAAAAAAAAA=")
-tile_set = SubResource("TileSet_barbo")
-
-[node name="building" type="TileMapLayer" parent="map" unique_id=279453018]
-position = Vector2(304, 164)
-tile_map_data = PackedByteArray("AAAAAP//AAAAAAAAAAA=")
-tile_set = SubResource("TileSet_6q7oa")
-
-[node name="skeleton" type="Sprite2D" parent="map/building" unique_id=986923628]
-position = Vector2(16, 16)
-texture = ExtResource("4_lushf")
-
-[node name="player" parent="." unique_id=339894636 instance=ExtResource("3_aum10")]
-position = Vector2(320, 180)
+[node name="map" parent="." unique_id=675885628 instance=ExtResource("2_lushf")]
 
 [node name="interface skeleton" type="Sprite2D" parent="." unique_id=848521970]
+z_index = 5
 position = Vector2(320, 180)
 texture = ExtResource("1_7fvvs")
