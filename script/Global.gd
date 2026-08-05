@@ -1,6 +1,8 @@
 extends Node
 
-var player_entity	: Entity
+var	player_entity	: Entity
+var	current_map		: Map
 
-func player_move(new_map_postion : Vector2):
-	player_entity.map_position = new_map_postion
+
+func drawMap():
+	current_map.global_position = player_entity.map_position * 96

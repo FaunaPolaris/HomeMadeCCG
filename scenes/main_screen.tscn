@@ -2,8 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://f7bcjx5cxiwo" path="res://assets/interface/fullScreen.png" id="1_7fvvs"]
 [ext_resource type="Shader" uid="uid://by0kyii641h7y" path="res://resources/shaders/clouds.gdshader" id="1_kusfh"]
-[ext_resource type="Script" uid="uid://c3kak3pssd0um" path="res://script/map_screen.gd" id="1_lushf"]
-[ext_resource type="PackedScene" uid="uid://djsy7etd1m3mx" path="res://scenes/map.tscn" id="2_lushf"]
+[ext_resource type="Script" uid="uid://c3kak3pssd0um" path="res://script/main.gd" id="1_lushf"]
 
 [sub_resource type="Gradient" id="Gradient_lushf"]
 offsets = PackedFloat32Array(0.1456693, 0.16929133, 0.22047244, 0.22834645, 0.42125985, 0.46456692, 0.5511811, 0.8543307)
@@ -15,7 +14,7 @@ fractal_type = 2
 fractal_lacunarity = 0.0
 fractal_weighted_strength = 0.5
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kusfh"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lushf"]
 noise = SubResource("FastNoiseLite_aum10")
 color_ramp = SubResource("Gradient_lushf")
 seamless = true
@@ -43,21 +42,21 @@ interpolation_mode = 1
 offsets = PackedFloat32Array(0.2007874, 0.4055118, 0.53543305, 0.57086617, 0.6062992, 0.86220473)
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.54901963, 1, 0.7058824, 0.3019608, 1, 1, 0, 0, 0, 1, 0, 1, 0.54901963, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_il54y"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_a46j4"]
 gradient = SubResource("Gradient_aum10")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_barbo"]
 shader = ExtResource("1_kusfh")
 shader_parameter/pixelation = Vector2(320, 180)
-shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_kusfh")
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_lushf")
 shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
 shader_parameter/cloud_noise2 = SubResource("NoiseTexture2D_w87pm")
 shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
 shader_parameter/center_pos = Vector2(0.5, 0.5)
 shader_parameter/position_impact = 0.75
-shader_parameter/color_gardient = SubResource("GradientTexture1D_il54y")
+shader_parameter/color_gardient = SubResource("GradientTexture1D_a46j4")
 
-[node name="map screen" type="Node2D" unique_id=1814321988]
+[node name="main screen" type="Node2D" unique_id=1814321988]
 texture_filter = 1
 scale = Vector2(3, 3)
 script = ExtResource("1_lushf")
@@ -68,9 +67,10 @@ offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0.08456469, 0.08161908, 0.18327162, 1)
 
-[node name="map" parent="." unique_id=675885628 instance=ExtResource("2_lushf")]
-
 [node name="interface skeleton" type="Sprite2D" parent="." unique_id=848521970]
 z_index = 5
 position = Vector2(320, 180)
 texture = ExtResource("1_7fvvs")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=343472254]
+anchor_mode = 0
