@@ -31,11 +31,14 @@ func	focus_entity(entity : Entity) -> void:
 	refresh_view()
 
 
-## Slides the map so the focused entity's cell sits at the center of the screen.
+## Brings everything that follows the focused entity up to date: where the map
+## sits, and how much of it the player has seen.
+##
 ## Every entity is a child of the map at [code]map_position * TILE_SIZE[/code], so
 ## offsetting the map by the focused entity's cell leaves that entity at the origin
 ## and keeps every other entity on its own coordinates.
 func	refresh_view() -> void:
 	if current_map == null or player_entity == null:
 		return
-	current_map.position = -player_entity.map_position * TILE_SIZE
+	current_map.position = -Vector2(player_entity.map_position) * TILE_SIZE
+	current_map.reveal_around(player_entity.map_position, player_entity.vision_range)

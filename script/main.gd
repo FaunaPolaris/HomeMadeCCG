@@ -6,6 +6,6 @@ func _ready() -> void:
 	add_child(Global.current_map)
 
 	var player : Entity = load("res://scenes/player.tscn").instantiate()
-	player.map_position = Vector2.ZERO
+	player.map_position = Vector2i.ZERO
 	Global.add_entity(player)
 	Global.focus_entity(player)
