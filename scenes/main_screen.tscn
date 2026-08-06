@@ -63,14 +63,14 @@ script = ExtResource("1_lushf")
 
 [node name="background" type="ColorRect" parent="." unique_id=785868584]
 material = SubResource("ShaderMaterial_barbo")
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = -319.6667
+offset_top = -180.0
+offset_right = 320.3333
+offset_bottom = 180.0
 color = Color(0.08456469, 0.08161908, 0.18327162, 1)
 
 [node name="interface skeleton" type="Sprite2D" parent="." unique_id=848521970]
 z_index = 5
-position = Vector2(320, 180)
 texture = ExtResource("1_7fvvs")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=343472254]
-anchor_mode = 0
