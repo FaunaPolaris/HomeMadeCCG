@@ -19,9 +19,30 @@ func	_ready() -> void:
 
 
 ## True when an entity is allowed to stand on [param cell].
-## A cell with no biome drawn on it is off the map, so nothing can be there.
-func	can_enter(cell : Vector2i) -> bool:
-	return has_biome(cell)
+## A cell with no biome drawn on it is off the map, and a cell already taken is
+## full — one entity per cell. [param mover] is the entity asking, so that it
+## never counts as blocking itself.
+##
+## Props and buildings deliberately do not block: walking onto them is how you
+## interact with them.
+func	can_enter(cell : Vector2i, mover : Entity = null) -> bool:
+	if not has_biome(cell):
+		return false
+	var occupant := entity_at(cell)
+	return occupant == null or occupant == mover
+
+
+## The entity standing on [param cell], or null when the cell is free.
+##
+## This walks the map's children rather than keeping an index of cells, so it
+## cannot go stale when an entity is placed by assigning map_position directly.
+## Worth turning into an index if entity counts ever get large.
+func	entity_at(cell : Vector2i) -> Entity:
+	for child in get_children():
+		var entity := child as Entity
+		if entity != null and entity.map_position == cell:
+			return entity
+	return null
 
 
 ## True when [param cell] has ground drawn on the biome layer.

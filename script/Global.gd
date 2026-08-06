@@ -14,6 +14,11 @@ func	add_entity(entity : Entity) -> void:
 	if current_map == null:
 		push_error("Global.add_entity: no current_map to add the entity to.")
 		return
+	if not current_map.has_biome(entity.map_position):
+		push_warning("Global.add_entity: '%s' is being placed on %s, which has no biome under it." % [entity.name, entity.map_position])
+	var occupant := current_map.entity_at(entity.map_position)
+	if occupant != null:
+		push_warning("Global.add_entity: '%s' is being placed on %s, already held by '%s'." % [entity.name, entity.map_position, occupant.name])
 	current_map.add_child(entity)
 	entity.refresh_position()
 
