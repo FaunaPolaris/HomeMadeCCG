@@ -51,7 +51,7 @@ func	move(direction : Vector2i) -> bool:
 func	can_enter(cell : Vector2i) -> bool:
 	if Global.current_map == null:
 		return true
-	return Global.current_map.can_enter(cell)
+	return Global.current_map.can_enter(cell, self)
 
 
 ## Snaps the entity onto its cell, in map-local space.
