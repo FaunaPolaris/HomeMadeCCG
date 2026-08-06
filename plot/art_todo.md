@@ -6,17 +6,13 @@ next to the exported `.png`, same as the existing tilesets.
 
 ## Blocking — there is placeholder code standing in for these
 
-- [ ] **Fog tile / tileset** → `assets/map/tiles/fog_tileset.tres`
-  `script/map/Fog.gd` currently draws flat `Color(0.03, 0.028, 0.07)` rectangles
-  over unseen cells. It works, but the fog edge is a hard 32px square.
-  Ideally a **terrain set with edge and corner variants** like `biome_tileset`,
-  so the border between seen and unseen autotiles into an organic shape.
-  Minimum viable: one solid 32x32 tile. Nice: 13-tile blob set.
-
 - [ ] **Prop tiles** → `assets/map/tiles/prop_tileset.tres`
   The `prop` layer exists and is wired, but has **zero tiles drawn** and is still
   borrowing `biome_tileset`. This is the forageables layer: plants, mushrooms,
   loose items. Needs its own tileset before anything can be placed to collect.
+
+**Fog needs no art.** Unexplored cells are simply not drawn, so the background
+shows through them. Nothing to paint.
 
 ## Next — needed to finish the map as designed
 
@@ -48,6 +44,12 @@ next to the exported `.png`, same as the existing tilesets.
 - [ ] **HUD inside the three panels.** `fullScreen.aseprite` has `base leyout`
       and `mock interface` layers hidden. Whatever the map HUD becomes has to
       live inside the three portrait columns for the mobile port.
+
+- [ ] **Optional: an explored-edge treatment.** Where explored ground meets the
+      unexplored void the tiles just stop, so the border is a hard 32px
+      staircase. If that reads badly once there is more map, an edge or
+      vignette tile drawn only on the outermost explored cells would soften it.
+      Nothing is waiting on this; it is a look-and-feel call.
 
 ## Not needed
 

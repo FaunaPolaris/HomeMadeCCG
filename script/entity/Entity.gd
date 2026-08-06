@@ -54,8 +54,11 @@ func	can_enter(cell : Vector2i) -> bool:
 	return Global.current_map.can_enter(cell, self)
 
 
-## Snaps the entity onto its cell, in map-local space.
+## Snaps the entity onto its cell, in map-local space, and hides it when that
+## cell has not been explored yet.
 ## The focused entity ends up at the screen center because the map itself is
 ## offset by exactly that cell — see [method Global.refresh_view].
 func	refresh_position() -> void:
 	position = Vector2(map_position) * Global.TILE_SIZE
+	if Global.current_map != null:
+		visible = Global.current_map.is_revealed(map_position)
