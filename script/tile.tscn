@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://bsm2mll6k1erv"]
-
-[node name="tile" type="Node2D" unique_id=854150566]
-
-[node name="floor" type="Sprite2D" parent="." unique_id=61237094]
-
-[node name="folliage" type="Sprite2D" parent="." unique_id=1461294176]
-
-[node name="structure" type="Sprite2D" parent="." unique_id=143427326]
