@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://81pegqvg2b3h" path="res://script/map/Map.gd" id="1_0cso3"]
 [ext_resource type="TileSet" uid="uid://bp3aso8bkba0q" path="res://assets/map/tiles/biome_tileset.tres" id="1_paxxb"]
 [ext_resource type="TileSet" uid="uid://oboe0lrjeey8" path="res://assets/map/tiles/building_tileset.tres" id="2_gldc4"]
+[ext_resource type="Script" uid="uid://cqdv4rixhs117" path="res://script/map/Fog.gd" id="3_fog01"]
 
 [node name="map" type="Node2D" unique_id=675885628]
 texture_filter = 1
@@ -21,3 +22,7 @@ tile_set = ExtResource("1_paxxb")
 position = Vector2(-16, -16)
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAEAAAA=")
 tile_set = ExtResource("2_gldc4")
+
+[node name="fog" type="Node2D" parent="." unique_id=1108734521]
+z_index = 1
+script = ExtResource("3_fog01")
