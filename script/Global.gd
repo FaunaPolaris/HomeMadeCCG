@@ -47,3 +47,61 @@ func	refresh_view() -> void:
 		return
 	current_map.position = -Vector2(player_entity.map_position) * TILE_SIZE
 	current_map.reveal_around(player_entity.map_position, player_entity.vision_range)
+
+
+## Called whenever an entity finishes a step. Only the focused entity triggers
+## anything, so an NPC walking over a doorway does not drag the player through it.
+func	entity_entered_cell(entity : Entity) -> void:
+	if entity != player_entity or current_map == null:
+		return
+	var transition := current_map.transition_at(entity.map_position)
+	if transition != null:
+		travel(transition)
+
+
+## Takes the player through [param transition].
+func	travel(transition : MapTransition) -> void:
+	if not transition.is_valid():
+		push_error("Global.travel: '%s' points at '%s', which does not exist." % [transition.name, transition.destination])
+		return
+	var scene : PackedScene = load(transition.destination)
+	if scene == null:
+		push_error("Global.travel: could not load '%s'." % transition.destination)
+		return
+	change_map(scene, transition.arrival_cell)
+
+
+## Swaps the current map for [param scene] and puts the player down on
+## [param arrival_cell].
+##
+## The map the player leaves is remembered first and put back if they return, so
+## what they explored and changed is not lost. The player is detached before the
+## old map is freed — the map is scenery, the player is not.
+func	change_map(scene : PackedScene, arrival_cell : Vector2i) -> void:
+	if current_map == null:
+		push_error("Global.change_map: there is no current map to leave.")
+		return
+
+	var root := current_map.get_parent()
+	var traveller := player_entity
+
+	if traveller != null and traveller.get_parent() == current_map:
+		current_map.remove_child(traveller)
+
+	SaveGame.remember(current_map)
+	var leaving := current_map
+	root.remove_child(leaving)
+	leaving.queue_free()
+
+	current_map = scene.instantiate()
+	root.add_child(current_map)
+	SaveGame.restore(current_map)
+
+	if traveller != null:
+		traveller.map_position = arrival_cell
+		add_entity(traveller)
+		refresh_view()
+
+	SaveGame.current_map_path = current_map.get_map_id()
+	SaveGame.player_cell = arrival_cell
+	SaveGame.save_to_disk()
