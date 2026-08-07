@@ -32,9 +32,15 @@ to be inside the map at all.
 ## Steps
 
 **1. Create the scene.**
-In the FileSystem dock, right-click `scenes/map.tscn` → **New Inherited Scene**.
-Save it into `scenes/maps/` with a descriptive name. Rename the root node to
-match the file — it is what shows up in warnings.
+In the FileSystem dock, right-click **`scenes/map.tscn`** → **New Inherited
+Scene**. Save it into `scenes/maps/` with a descriptive name. Rename the root
+node to match the file — it is what shows up in warnings.
+
+> **Inherit from `scenes/map.tscn`, not from another map.** Right-clicking
+> `scenes/maps/temple.tscn` by mistake also works, and looks fine, but it makes
+> the new map a *variant of temple*: it starts with temple's tiles and transition
+> node, and every later change to temple follows it. `scenes/map.tscn` is the only
+> scene that is empty on purpose.
 
 **2. Paint the ground.**
 Select the `biome` layer, open the TileMap panel, and paint. Use the **Terrains**
