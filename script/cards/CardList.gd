@@ -16,12 +16,25 @@ const WHEEL_STEP := 48.0
 ## Easing rate toward the target offset; higher is snappier.
 const SMOOTHING := 12.0
 
+## How long the deck takes to slide open or closed.
+const SLIDE_TIME := 0.25
+
 ## Cards to fill the list with until real systems hand theirs over.
 @export var placeholder_cards := 6
+
+## Where the list rests, relative to its open position, while the deck
+## is closed. Zero means the list has nowhere to hide and stays put.
+@export var slide_when_closed := Vector2.ZERO
+
+## Whether the deck starts open. Toggled by the toggle_deck action.
+@export var open := true:
+	set = set_open
 
 var _target := 0.0
 var _offset := 0.0
 var _dragging := false
+var _open_position := Vector2.ZERO
+var _slide: Tween
 
 @onready var _cards: Control = %cards
 
@@ -32,6 +45,31 @@ func _ready() -> void:
 		card.card_name = "CARD %d" % (i + 1)
 		card.element = (i % Card.Element.size()) as Card.Element
 		add_card(card)
+	_open_position = position
+	if not open:
+		position = _open_position + slide_when_closed
+		visible = slide_when_closed == Vector2.ZERO
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Every list answers the action; the event stays unhandled so the
+	# other panel's list slides together with this one.
+	if event.is_action_pressed("toggle_deck"):
+		set_open(not open)
+
+
+func set_open(value: bool) -> void:
+	open = value
+	if not is_node_ready():
+		return
+	if _slide:
+		_slide.kill()
+	visible = true
+	var resting := _open_position + (Vector2.ZERO if open else slide_when_closed)
+	_slide = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	_slide.tween_property(self, "position", resting, SLIDE_TIME)
+	if not open and slide_when_closed != Vector2.ZERO:
+		_slide.tween_callback(func() -> void: visible = false)
 
 
 func add_card(card: Card) -> void:

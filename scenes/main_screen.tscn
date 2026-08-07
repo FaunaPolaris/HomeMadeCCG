@@ -84,9 +84,13 @@ offset_left = -300.0
 offset_top = -164.0
 offset_right = -108.0
 offset_bottom = 124.0
+slide_when_closed = Vector2(-212, 0)
+open = false
 
 [node name="card_list_right" parent="." instance=ExtResource("7_cardlist")]
 offset_left = 108.0
 offset_top = -164.0
 offset_right = 300.0
 offset_bottom = 124.0
+slide_when_closed = Vector2(212, 0)
+open = false
