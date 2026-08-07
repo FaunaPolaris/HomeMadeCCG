@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4w8lmqur3gif"]
+
+[ext_resource type="Script" path="res://script/cards/DeckDisplay.gd" id="1_display"]
+
+[node name="deck_display" type="Control"]
+texture_filter = 1
+z_index = 6
+custom_minimum_size = Vector2(193, 9)
+offset_right = 193.0
+offset_bottom = 9.0
+mouse_filter = 2
+script = ExtResource("1_display")

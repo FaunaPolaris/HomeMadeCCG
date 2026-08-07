@@ -9,6 +9,12 @@ extends Control
 ## The list started or finished sliding open or closed.
 signal open_changed(now_open: bool)
 
+## Cards were loaded, added or cleared.
+signal deck_changed
+
+## The scroll settled toward a different card.
+signal selection_changed(index: int)
+
 const CARD_SCENE := preload("res://scenes/cards/card.tscn")
 
 ## Gap between stacked cards, in card pixels.
@@ -30,6 +36,9 @@ const SLIDE_TIME := 0.25
 ## Whether the deck starts open. Toggled by the toggle_deck action.
 @export var open := true:
 	set = set_open
+
+## The card the scroll is resting on, or heading toward.
+var selected_index := 0
 
 var _target := 0.0
 var _offset := 0.0
@@ -77,6 +86,7 @@ func set_open(value: bool) -> void:
 func add_card(card: Card) -> void:
 	_cards.add_child(card)
 	card.position = Vector2(0, (_cards.get_child_count() - 1) * (Card.SIZE.y + CARD_GAP))
+	deck_changed.emit()
 
 
 ## Replaces the list's contents with one card per decklist entry.
@@ -89,6 +99,10 @@ func load_deck(deck: Array) -> void:
 			add_card(card)
 
 
+func card_count() -> int:
+	return _cards.get_child_count()
+
+
 func clear_cards() -> void:
 	for card in _cards.get_children():
 		# Detach right away so add_card counts only the cards that stay.
@@ -96,6 +110,8 @@ func clear_cards() -> void:
 		card.queue_free()
 	_target = 0.0
 	_offset = 0.0
+	deck_changed.emit()
+	_update_selection()
 
 
 ## One card of scroll distance.
@@ -129,12 +145,20 @@ func _gui_input(event: InputEvent) -> void:
 		_drag_by(event.relative.y)
 	elif event is InputEventScreenTouch and not event.pressed:
 		_target = _snapped(_target)
+	_update_selection()
 
 
 ## Dragging follows the pointer directly; the snap waits for the release.
 func _drag_by(relative_y: float) -> void:
 	_target = clampf(_target - relative_y, 0.0, _max_scroll())
 	_offset = _target
+
+
+func _update_selection() -> void:
+	var index := int(roundf(_target / _pitch()))
+	if index != selected_index:
+		selected_index = index
+		selection_changed.emit(index)
 
 
 func _process(delta: float) -> void:

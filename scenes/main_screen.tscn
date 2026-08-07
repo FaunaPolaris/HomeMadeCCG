@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://crukba5pbvox2" path="res://scenes/cheat_menu.tscn" id="2_cheat"]
 [ext_resource type="PackedScene" uid="uid://b01fnj4tmxhq1" path="res://scenes/cards/card_list.tscn" id="7_cardlist"]
 [ext_resource type="PackedScene" uid="uid://s6nf1u3yofrv" path="res://scenes/cards/cardbox.tscn" id="8_cardbox"]
+[ext_resource type="PackedScene" uid="uid://b4w8lmqur3gif" path="res://scenes/cards/deck_display.tscn" id="9_display"]
 
 [sub_resource type="Gradient" id="Gradient_lushf"]
 offsets = PackedFloat32Array(0.1456693, 0.16929133, 0.22047244, 0.22834645, 0.42125985, 0.46456692, 0.5511811, 0.8543307)
@@ -110,3 +111,10 @@ offset_top = 129.0
 offset_right = 220.0
 offset_bottom = 161.0
 list = NodePath("../terrain_cards")
+
+[node name="deck_display" parent="." node_paths=PackedStringArray("list") instance=ExtResource("9_display")]
+offset_left = -301.0
+offset_top = 162.0
+offset_right = -108.0
+offset_bottom = 171.0
+list = NodePath("../player_deck")
