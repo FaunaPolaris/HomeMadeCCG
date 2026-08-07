@@ -5,6 +5,10 @@ extends Control
 ## the mouse wheel or by dragging (mouse or touch) and always comes to
 ## rest centered on one card: a wheel notch moves one whole card, and a
 ## released drag eases to whichever card is nearest.
+##
+## The strip is circular: cards sit on a ring, so scrolling back from
+## the first card arrives at the last one and scrolling past the last
+## wraps around to the first.
 
 ## The list started or finished sliding open or closed.
 signal open_changed(now_open: bool)
@@ -119,17 +123,15 @@ func _pitch() -> float:
 	return Card.SIZE.y + CARD_GAP
 
 
-## The offset that puts the last card in the panel.
-func _max_scroll() -> float:
-	return maxf(0.0, (_cards.get_child_count() - 1) * _pitch())
-
-
-## The nearest offset that frames a card exactly.
+## The nearest offset that frames a card exactly. Unclamped: the scroll
+## is free to run past either end and wrap around the ring.
 func _snapped(value: float) -> float:
-	return clampf(roundf(value / _pitch()) * _pitch(), 0.0, _max_scroll())
+	return roundf(value / _pitch()) * _pitch()
 
 
 func _gui_input(event: InputEvent) -> void:
+	if _cards.get_child_count() == 0:
+		return
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			_target = _snapped(_target - _pitch())
@@ -150,12 +152,15 @@ func _gui_input(event: InputEvent) -> void:
 
 ## Dragging follows the pointer directly; the snap waits for the release.
 func _drag_by(relative_y: float) -> void:
-	_target = clampf(_target - relative_y, 0.0, _max_scroll())
+	_target -= relative_y
 	_offset = _target
 
 
 func _update_selection() -> void:
-	var index := int(roundf(_target / _pitch()))
+	var count := _cards.get_child_count()
+	var index := 0
+	if count > 0:
+		index = posmod(int(roundf(_target / _pitch())), count)
 	if index != selected_index:
 		selected_index = index
 		selection_changed.emit(index)
@@ -163,4 +168,13 @@ func _update_selection() -> void:
 
 func _process(delta: float) -> void:
 	_offset = lerpf(_offset, _target, 1.0 - exp(-SMOOTHING * delta))
-	_cards.position.y = -roundf(_offset)
+	var count := _cards.get_child_count()
+	if count == 0:
+		return
+	# Each card sits wherever the ring currently puts it: within half a
+	# ring of the view, so the neighbours above and below are always in
+	# place when the scroll wraps past either end.
+	var ring := count * _pitch()
+	for i in count:
+		var around := fposmod(i * _pitch() - _offset + ring / 2.0, ring) - ring / 2.0
+		(_cards.get_child(i) as Control).position.y = roundf(around)
