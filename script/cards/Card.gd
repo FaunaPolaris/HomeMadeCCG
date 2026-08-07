@@ -48,3 +48,31 @@ func _limit_description_lines() -> void:
 func _show_element_icon() -> void:
 	var icon: AtlasTexture = %element_icon.texture
 	icon.region = Rect2(element * ICON_SIZE, 0, ICON_SIZE, ICON_SIZE)
+
+
+## Cards travel through decklists and the save file as JSON-safe
+## dictionaries: {"name": ..., "description": ..., "element": "fire"}.
+func apply_data(data: Dictionary) -> void:
+	card_name = String(data.get("name", card_name))
+	description = String(data.get("description", description))
+	element = element_from_name(String(data.get("element", "null")))
+
+
+func to_data() -> Dictionary:
+	return {
+		"name": card_name,
+		"description": description,
+		"element": element_name(element),
+	}
+
+
+static func element_name(value: Element) -> String:
+	return (Element.keys()[value] as String).to_lower()
+
+
+static func element_from_name(named: String) -> Element:
+	var index := Element.keys().find(named.to_upper())
+	if index < 0:
+		push_warning("Card: unknown element '%s', using null." % named)
+		return Element.NULL
+	return index as Element

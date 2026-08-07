@@ -29,6 +29,11 @@ var	current_map_path	: String = ""
 ## Cell the player was standing on.
 var	player_cell			: Vector2i = Vector2i.ZERO
 
+## The cards in the player's deck, as the JSON-safe dictionaries
+## [method Card.to_data] makes. Empty means "not dealt yet" — the game
+## seeds it from the starter decklist.
+var	player_deck			: Array = []
+
 ## map id (its scene path) -> that map's state, as returned by [method Map.capture_state].
 var	_maps				: Dictionary = {}
 
@@ -63,6 +68,7 @@ func	clear() -> void:
 	_maps.clear()
 	current_map_path = ""
 	player_cell = Vector2i.ZERO
+	player_deck = []
 
 
 ## Forgets everything and deletes the save from disk, leaving nothing for the
@@ -92,6 +98,7 @@ func	save_to_disk() -> Error:
 		"version": FORMAT_VERSION,
 		"current_map": current_map_path,
 		"player_cell": cell_to_key(player_cell),
+		"deck": player_deck,
 		"maps": _maps,
 	}
 	var file := FileAccess.open(TEMP_PATH, FileAccess.WRITE)
@@ -138,6 +145,10 @@ func	load_from_disk() -> Error:
 
 	current_map_path = String(parsed.get("current_map", ""))
 	player_cell = key_to_cell(String(parsed.get("player_cell", "0,0")))
+	# Saves from before the deck existed simply have no "deck" key; an
+	# empty deck makes the game deal the starter decklist again.
+	var deck : Variant = parsed.get("deck", [])
+	player_deck = deck if deck is Array else []
 	_maps = parsed.get("maps", {})
 	return OK
 

@@ -80,15 +80,16 @@ texture = ExtResource("1_7fvvs")
 
 [node name="cheat_menu" parent="." unique_id=1993027544 instance=ExtResource("2_cheat")]
 
-[node name="card_list_left" parent="." instance=ExtResource("7_cardlist")]
+[node name="player_deck" parent="." instance=ExtResource("7_cardlist")]
 offset_left = -300.0
 offset_top = -164.0
 offset_right = -108.0
 offset_bottom = 124.0
+placeholder_cards = 0
 slide_when_closed = Vector2(0, 344)
 open = false
 
-[node name="card_list_right" parent="." instance=ExtResource("7_cardlist")]
+[node name="terrain_cards" parent="." instance=ExtResource("7_cardlist")]
 offset_left = 108.0
 offset_top = -164.0
 offset_right = 300.0
@@ -101,11 +102,11 @@ offset_left = -220.0
 offset_top = 129.0
 offset_right = -188.0
 offset_bottom = 161.0
-list = NodePath("../card_list_left")
+list = NodePath("../player_deck")
 
 [node name="cardbox_right" parent="." node_paths=PackedStringArray("list") instance=ExtResource("8_cardbox")]
 offset_left = 188.0
 offset_top = 129.0
 offset_right = 220.0
 offset_bottom = 161.0
-list = NodePath("../card_list_right")
+list = NodePath("../terrain_cards")

@@ -81,10 +81,23 @@ func add_card(card: Card) -> void:
 	card.position = Vector2(0, (_cards.get_child_count() - 1) * (Card.SIZE.y + CARD_GAP))
 
 
+## Replaces the list's contents with one card per decklist entry.
+func load_deck(deck: Array) -> void:
+	clear_cards()
+	for entry in deck:
+		if entry is Dictionary:
+			var card: Card = CARD_SCENE.instantiate()
+			card.apply_data(entry)
+			add_card(card)
+
+
 func clear_cards() -> void:
 	for card in _cards.get_children():
+		# Detach right away so add_card counts only the cards that stay.
+		_cards.remove_child(card)
 		card.queue_free()
 	_target = 0.0
+	_offset = 0.0
 
 
 func _max_scroll() -> float:
