@@ -4,6 +4,8 @@
 [ext_resource type="Shader" uid="uid://by0kyii641h7y" path="res://resources/shaders/clouds.gdshader" id="1_kusfh"]
 [ext_resource type="Script" uid="uid://c3kak3pssd0um" path="res://script/main.gd" id="1_lushf"]
 [ext_resource type="PackedScene" uid="uid://crukba5pbvox2" path="res://scenes/cheat_menu.tscn" id="2_cheat"]
+[ext_resource type="LabelSettings" uid="uid://coefi4u01llir" path="res://resources/label/header_text.tres" id="5_a46j4"]
+[ext_resource type="LabelSettings" uid="uid://dyjtyjakfxgxq" path="res://resources/label/body_text.tres" id="6_23dc1"]
 
 [sub_resource type="Gradient" id="Gradient_lushf"]
 offsets = PackedFloat32Array(0.1456693, 0.16929133, 0.22047244, 0.22834645, 0.42125985, 0.46456692, 0.5511811, 0.8543307)
@@ -77,3 +79,21 @@ texture = ExtResource("1_7fvvs")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=343472254]
 
 [node name="cheat_menu" parent="." unique_id=1993027544 instance=ExtResource("2_cheat")]
+
+[node name="Label" type="Label" parent="." unique_id=637713310]
+z_index = 5
+offset_left = -276.33334
+offset_top = -161.33334
+offset_right = 27.666656
+offset_bottom = -138.33334
+text = "CARD NAME"
+label_settings = ExtResource("5_a46j4")
+
+[node name="Label2" type="Label" parent="." unique_id=634846402]
+z_index = 5
+offset_left = -275.33334
+offset_top = -144.66666
+offset_right = 28.666656
+offset_bottom = -121.66666
+text = "Card description"
+label_settings = ExtResource("6_23dc1")
