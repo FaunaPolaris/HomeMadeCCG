@@ -107,6 +107,12 @@ func card_count() -> int:
 	return _cards.get_child_count()
 
 
+func card_at(index: int) -> Card:
+	if index < 0 or index >= _cards.get_child_count():
+		return null
+	return _cards.get_child(index)
+
+
 func clear_cards() -> void:
 	for card in _cards.get_children():
 		# Detach right away so add_card counts only the cards that stay.

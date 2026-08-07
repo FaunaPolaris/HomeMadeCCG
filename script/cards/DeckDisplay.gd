@@ -56,12 +56,7 @@ func _draw() -> void:
 	var lefts := _count - 1 - (_count - 1) / 2
 	for place in _count:
 		var card := posmod(place - lefts, _count)
-		var art := ART_FAR
-		match ring_distance(card, _selected, _count):
-			0:
-				art = ART_SELECTED
-			1:
-				art = ART_NEAR
+		var art := _art_for(card, ring_distance(card, _selected, _count))
 		arts.append(art)
 		total += art.size.x
 	var x := STRIP_CENTER - total / 2.0
@@ -69,6 +64,20 @@ func _draw() -> void:
 		var corner := Vector2(x, (9.0 - art.size.y) / 2.0)
 		draw_texture_rect_region(SHEET, Rect2(corner.floor(), art.size), art)
 		x += art.size.x + ART_GAP
+
+
+## The art for one card: today only the distance to the focus matters,
+## every card drawing from the shared small_card_base sheet. When small
+## cards learn to show their card_type (see plot/card_types.md), this is
+## the seam: read list.card_at(card).card_type and pick that type's
+## sheet before choosing the size.
+func _art_for(_card: int, distance: int) -> Rect2:
+	match distance:
+		0:
+			return ART_SELECTED
+		1:
+			return ART_NEAR
+	return ART_FAR
 
 
 ## How far from the middle of the strip card [param index] sits:

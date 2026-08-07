@@ -118,3 +118,10 @@ offset_top = 162.0
 offset_right = -108.0
 offset_bottom = 171.0
 list = NodePath("../player_deck")
+
+[node name="terrain_display" parent="." node_paths=PackedStringArray("list") instance=ExtResource("9_display")]
+offset_left = 108.0
+offset_top = 162.0
+offset_right = 301.0
+offset_bottom = 171.0
+list = NodePath("../terrain_cards")

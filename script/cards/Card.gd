@@ -27,6 +27,17 @@ const ICON_SIZE := 12
 		if is_node_ready():
 			_show_element_icon()
 
+## What kind of thing this card is: "hero", "creature", "item",
+## "storage", "npc", "merchant", "quest", "lore"... Free-form on
+## purpose — new types will appear as content grows (see
+## plot/card_types.md), and a card must not break by carrying a type
+## before the systems for it exist.
+@export var card_type := ""
+
+## Everything the decklist entry said, kept verbatim so keys no system
+## reads yet survive a round trip through the card and into the save.
+var _source := {}
+
 
 func _ready() -> void:
 	%name_label.text = card_name
@@ -53,19 +64,22 @@ func _show_element_icon() -> void:
 ## Cards travel through decklists and the save file as JSON-safe
 ## dictionaries: {"name": ..., "description": ..., "element": "fire"}.
 func apply_data(data: Dictionary) -> void:
+	_source = data.duplicate(true)
 	# str() rather than String(): decklists come from JSON, and a number
 	# where text was expected should print, not crash.
 	card_name = str(data.get("name", card_name))
 	description = str(data.get("description", description))
 	element = element_from_name(str(data.get("element", "null")))
+	card_type = str(data.get("type", card_type))
 
 
 func to_data() -> Dictionary:
-	return {
-		"name": card_name,
-		"description": description,
-		"element": element_name(element),
-	}
+	var data := _source.duplicate(true)
+	data["name"] = card_name
+	data["description"] = description
+	data["element"] = element_name(element)
+	data["type"] = card_type
+	return data
 
 
 static func element_name(value: Element) -> String:
