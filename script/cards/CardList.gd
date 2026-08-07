@@ -2,8 +2,9 @@ class_name CardList
 extends Control
 
 ## A vertical strip of cards clipped to one interface panel. Scrolls with
-## the mouse wheel or by dragging (mouse or touch), easing toward the
-## target offset and snapping to whole pixels so the art stays crisp.
+## the mouse wheel or by dragging (mouse or touch) and always comes to
+## rest centered on one card: a wheel notch moves one whole card, and a
+## released drag eases to whichever card is nearest.
 
 ## The list started or finished sliding open or closed.
 signal open_changed(now_open: bool)
@@ -12,9 +13,6 @@ const CARD_SCENE := preload("res://scenes/cards/card.tscn")
 
 ## Gap between stacked cards, in card pixels.
 const CARD_GAP := 8.0
-
-## How far one wheel notch scrolls.
-const WHEEL_STEP := 48.0
 
 ## Easing rate toward the target offset; higher is snappier.
 const SMOOTHING := 12.0
@@ -100,29 +98,43 @@ func clear_cards() -> void:
 	_offset = 0.0
 
 
+## One card of scroll distance.
+func _pitch() -> float:
+	return Card.SIZE.y + CARD_GAP
+
+
+## The offset that puts the last card in the panel.
 func _max_scroll() -> float:
-	var count := _cards.get_child_count()
-	if count == 0:
-		return 0.0
-	var total := count * (Card.SIZE.y + CARD_GAP) - CARD_GAP
-	return maxf(0.0, total - size.y)
+	return maxf(0.0, (_cards.get_child_count() - 1) * _pitch())
+
+
+## The nearest offset that frames a card exactly.
+func _snapped(value: float) -> float:
+	return clampf(roundf(value / _pitch()) * _pitch(), 0.0, _max_scroll())
 
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
-			_target -= WHEEL_STEP
+			_target = _snapped(_target - _pitch())
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
-			_target += WHEEL_STEP
+			_target = _snapped(_target + _pitch())
 		elif event.button_index == MOUSE_BUTTON_LEFT:
 			_dragging = event.pressed
+			if not _dragging:
+				_target = _snapped(_target)
 	elif event is InputEventMouseMotion and _dragging:
-		_target -= event.relative.y
-		_offset = _target  # follow the pointer directly, no easing
+		_drag_by(event.relative.y)
 	elif event is InputEventScreenDrag:
-		_target -= event.relative.y
-		_offset = _target
-	_target = clampf(_target, 0.0, _max_scroll())
+		_drag_by(event.relative.y)
+	elif event is InputEventScreenTouch and not event.pressed:
+		_target = _snapped(_target)
+
+
+## Dragging follows the pointer directly; the snap waits for the release.
+func _drag_by(relative_y: float) -> void:
+	_target = clampf(_target - relative_y, 0.0, _max_scroll())
+	_offset = _target
 
 
 func _process(delta: float) -> void:
