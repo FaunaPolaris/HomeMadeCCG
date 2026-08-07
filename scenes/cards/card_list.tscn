@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://b01fnj4tmxhq1"]
+
+[ext_resource type="Script" path="res://script/cards/CardList.gd" id="1_list"]
+
+[node name="card_list" type="Control"]
+z_index = 4
+clip_contents = true
+custom_minimum_size = Vector2(192, 288)
+offset_right = 192.0
+offset_bottom = 288.0
+script = ExtResource("1_list")
+
+[node name="cards" type="Control" parent="."]
+unique_name_in_owner = true
+mouse_filter = 2

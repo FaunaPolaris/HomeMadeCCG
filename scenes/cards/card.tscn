@@ -1,0 +1,112 @@
+[gd_scene load_steps=13 format=3 uid="uid://b71nhlapcf4dc"]
+
+[ext_resource type="Script" path="res://script/cards/Card.gd" id="1_card"]
+[ext_resource type="Texture2D" uid="uid://buvkh0rvxnx4r" path="res://assets/interface/cards/art_frame.png" id="2_artf"]
+[ext_resource type="Texture2D" uid="uid://c2alw4u2tgvrn" path="res://assets/interface/cards/name_frame.png" id="3_namef"]
+[ext_resource type="Texture2D" uid="uid://ds5qggx1iaywk" path="res://assets/interface/cards/name_text.png" id="4_namet"]
+[ext_resource type="Texture2D" uid="uid://ywqwrmqxbun7" path="res://assets/interface/cards/description_frame.png" id="5_descf"]
+[ext_resource type="Texture2D" uid="uid://cbquv8lswsbng" path="res://assets/interface/cards/description_text.png" id="6_desct"]
+[ext_resource type="Texture2D" uid="uid://1yiei5kjc36x" path="res://assets/interface/cards/element_frame.png" id="7_elemf"]
+[ext_resource type="Texture2D" uid="uid://d1k25tlif23ja" path="res://assets/interface/cards/element_icon.png" id="8_elemi"]
+[ext_resource type="Texture2D" uid="uid://dinnva3xxftiy" path="res://assets/interface/cards/specifics_frame.png" id="9_specf"]
+[ext_resource type="Texture2D" uid="uid://cgg6aahy3fye5" path="res://assets/interface/icons/elements.png" id="10_icons"]
+[ext_resource type="LabelSettings" uid="uid://coefi4u01llir" path="res://resources/label/header_text.tres" id="11_header"]
+[ext_resource type="LabelSettings" uid="uid://dyjtyjakfxgxq" path="res://resources/label/body_text.tres" id="12_body"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_element"]
+resource_local_to_scene = true
+atlas = ExtResource("10_icons")
+region = Rect2(96, 0, 12, 12)
+
+[node name="card" type="Control"]
+texture_filter = 1
+custom_minimum_size = Vector2(192, 288)
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+script = ExtResource("1_card")
+
+[node name="art_frame" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("2_artf")
+
+[node name="art" type="TextureRect" parent="."]
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 71.0
+offset_bottom = 68.0
+mouse_filter = 2
+
+[node name="name_frame" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("3_namef")
+
+[node name="name_text" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("4_namet")
+
+[node name="description_frame" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("5_descf")
+
+[node name="description_text" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("6_desct")
+
+[node name="element_frame" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("7_elemf")
+
+[node name="element_icon_art" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("8_elemi")
+
+[node name="element_icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 16.0
+offset_bottom = 17.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_element")
+
+[node name="specifics_frame" type="TextureRect" parent="."]
+offset_right = 192.0
+offset_bottom = 288.0
+mouse_filter = 2
+texture = ExtResource("9_specf")
+
+[node name="name_label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 72.0
+offset_top = 5.0
+offset_right = 186.0
+offset_bottom = 17.0
+text = "CARD NAME"
+label_settings = ExtResource("11_header")
+clip_text = true
+
+[node name="description_label" type="Label" parent="."]
+unique_name_in_owner = true
+clip_contents = true
+offset_left = 72.0
+offset_top = 21.0
+offset_right = 184.0
+offset_bottom = 65.0
+text = "Card description"
+label_settings = ExtResource("12_body")
+autowrap_mode = 3

@@ -43,6 +43,8 @@ func	move(direction : Vector2i) -> bool:
 	refresh_position()
 	if screen_focus:
 		Global.refresh_view()
+	# Last, because this can carry the player off to another map entirely.
+	Global.entity_entered_cell(self)
 	return true
 
 

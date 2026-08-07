@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://crukba5pbvox2"]
+
+[ext_resource type="Script" uid="uid://cvpeb1rx2fere" path="res://script/debug/CheatMenu.gd" id="1_cheat"]
+
+[node name="cheat_menu" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_cheat")
+
+[node name="panel" type="PanelContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 336.0
+offset_bottom = 140.0
+
+[node name="layout" type="VBoxContainer" parent="panel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="title" type="Label" parent="panel/layout"]
+layout_mode = 2
+text = "CHEAT MENU — F1"
+
+[node name="commands" type="VBoxContainer" parent="panel/layout"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="status" type="Label" parent="panel/layout"]
+layout_mode = 2
+text = ""
+autowrap_mode = 3

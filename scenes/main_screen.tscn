@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://f7bcjx5cxiwo" path="res://assets/interface/fullScreen.png" id="1_7fvvs"]
 [ext_resource type="Shader" uid="uid://by0kyii641h7y" path="res://resources/shaders/clouds.gdshader" id="1_kusfh"]
 [ext_resource type="Script" uid="uid://c3kak3pssd0um" path="res://script/main.gd" id="1_lushf"]
+[ext_resource type="PackedScene" uid="uid://crukba5pbvox2" path="res://scenes/cheat_menu.tscn" id="2_cheat"]
+[ext_resource type="PackedScene" uid="uid://b01fnj4tmxhq1" path="res://scenes/cards/card_list.tscn" id="7_cardlist"]
 
 [sub_resource type="Gradient" id="Gradient_lushf"]
 offsets = PackedFloat32Array(0.1456693, 0.16929133, 0.22047244, 0.22834645, 0.42125985, 0.46456692, 0.5511811, 0.8543307)
@@ -74,3 +76,21 @@ z_index = 5
 texture = ExtResource("1_7fvvs")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=343472254]
+
+[node name="cheat_menu" parent="." unique_id=1993027544 instance=ExtResource("2_cheat")]
+
+[node name="card_list_left" parent="." instance=ExtResource("7_cardlist")]
+offset_left = -300.0
+offset_top = -164.0
+offset_right = -108.0
+offset_bottom = 124.0
+slide_when_closed = Vector2(-212, 0)
+open = false
+
+[node name="card_list_right" parent="." instance=ExtResource("7_cardlist")]
+offset_left = 108.0
+offset_top = -164.0
+offset_right = 300.0
+offset_bottom = 124.0
+slide_when_closed = Vector2(212, 0)
+open = false

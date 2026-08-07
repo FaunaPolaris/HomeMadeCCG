@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://coefi4u01llir"]
+
+[ext_resource type="FontFile" uid="uid://ivjrsbl7nb3d" path="res://assets/fonts/TinyPixels.png" id="1_uvljv"]
+
+[resource]
+font = ExtResource("1_uvljv")
+font_size = 12
