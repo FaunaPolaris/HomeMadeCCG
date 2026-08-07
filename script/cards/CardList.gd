@@ -5,6 +5,9 @@ extends Control
 ## the mouse wheel or by dragging (mouse or touch), easing toward the
 ## target offset and snapping to whole pixels so the art stays crisp.
 
+## The list started or finished sliding open or closed.
+signal open_changed(now_open: bool)
+
 const CARD_SCENE := preload("res://scenes/cards/card.tscn")
 
 ## Gap between stacked cards, in card pixels.
@@ -62,6 +65,7 @@ func set_open(value: bool) -> void:
 	open = value
 	if not is_node_ready():
 		return
+	open_changed.emit(open)
 	if _slide:
 		_slide.kill()
 	visible = true
