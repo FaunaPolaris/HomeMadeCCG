@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://f7bcjx5cxiwo" path="res://assets/interface/fullScreen.png" id="1_7fvvs"]
 [ext_resource type="Shader" uid="uid://by0kyii641h7y" path="res://resources/shaders/clouds.gdshader" id="1_kusfh"]
 [ext_resource type="Script" uid="uid://c3kak3pssd0um" path="res://script/main.gd" id="1_lushf"]
+[ext_resource type="PackedScene" uid="uid://crukba5pbvox2" path="res://scenes/cheat_menu.tscn" id="2_cheat"]
 
 [sub_resource type="Gradient" id="Gradient_lushf"]
 offsets = PackedFloat32Array(0.1456693, 0.16929133, 0.22047244, 0.22834645, 0.42125985, 0.46456692, 0.5511811, 0.8543307)
@@ -74,3 +75,5 @@ z_index = 5
 texture = ExtResource("1_7fvvs")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=343472254]
+
+[node name="cheat_menu" parent="." unique_id=1993027544 instance=ExtResource("2_cheat")]

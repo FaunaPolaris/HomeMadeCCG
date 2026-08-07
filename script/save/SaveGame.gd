@@ -58,11 +58,28 @@ func	has_state(map_id : String) -> bool:
 	return _maps.has(map_id)
 
 
-## Forgets everything. Used by a new game.
+## Forgets everything held in memory. Used by a new game.
 func	clear() -> void:
 	_maps.clear()
 	current_map_path = ""
 	player_cell = Vector2i.ZERO
+
+
+## Forgets everything and deletes the save from disk, leaving nothing for the
+## next launch to continue from. Clearing memory alone would not be enough — the
+## next map change would just write the old state back out.
+func	discard() -> void:
+	clear()
+	var dir := DirAccess.open("user://")
+	if dir == null:
+		push_error("SaveGame: could not open user:// to delete the save.")
+		return
+	for path : String in [SAVE_PATH, TEMP_PATH]:
+		var file_name := path.get_file()
+		if dir.file_exists(file_name):
+			var err := dir.remove(file_name)
+			if err != OK:
+				push_error("SaveGame: could not delete %s (error %d)." % [path, err])
 
 
 ## True when there is a save on disk to continue from.
