@@ -4,12 +4,14 @@ extends Control
 ## The row of tiny cards under the deck's panel: one per card in the
 ## list, so the row reads as a gauge of how full the deckbox is.
 ##
-## The deck is dealt onto a fixed circular ring — card 0 to the middle
-## slot, the rest left, right, left, right until the deck is full at
-## MAX_DECK — and the cards never leave their slots. Scrolling the big
-## list moves the FOCUS instead: the selected card wears the big art
-## wherever it sits, its ring neighbours (wrapping around the ends)
-## wear the middle art, and everything further wears the small one.
+## The deck runs left to right in deck order with card 0 in the middle
+## and the tail circling around to the left side — seven cards sit as
+## 4 5 6 [0] 1 2 3 — with as many cards on either side as symmetry
+## allows, full at MAX_DECK. Scrolling the big list moves the FOCUS
+## across that fixed order: the selected card wears the big art, its
+## ring neighbours (wrapping at the ends) the middle art, the rest the
+## small one. The row reflows with a 1px gap between arts, so the wider
+## arts always buy their room around the focused card.
 
 const SHEET := preload("res://assets/interface/cards/small_card_base.png")
 
@@ -20,8 +22,10 @@ const ART_SELECTED := Rect2(0, 0, 9, 9)
 const ART_NEAR := Rect2(10, 1, 7, 7)
 const ART_FAR := Rect2(20, 2, 5, 5)
 
-## Horizontal distance between the small outer slots.
-const SLOT_STEP := 6.0
+## Space between neighbouring arts, and the middle of the guide strip
+## the row is centered on.
+const ART_GAP := 1.0
+const STRIP_CENTER := 96.5
 
 @export var list: CardList
 
@@ -45,53 +49,38 @@ func _refresh() -> void:
 
 
 func _draw() -> void:
-	for card in _count:
+	if _count == 0:
+		return
+	var arts: Array[Rect2] = []
+	var total := (_count - 1) * ART_GAP
+	var lefts := _count - 1 - (_count - 1) / 2
+	for place in _count:
+		var card := posmod(place - lefts, _count)
 		var art := ART_FAR
 		match ring_distance(card, _selected, _count):
 			0:
 				art = ART_SELECTED
 			1:
 				art = ART_NEAR
-		var center := _slot_center(fixed_slot(card))
-		var corner := Vector2(center - art.size.x / 2.0, (9.0 - art.size.y) / 2.0)
+		arts.append(art)
+		total += art.size.x
+	var x := STRIP_CENTER - total / 2.0
+	for art in arts:
+		var corner := Vector2(x, (9.0 - art.size.y) / 2.0)
 		draw_texture_rect_region(SHEET, Rect2(corner.floor(), art.size), art)
+		x += art.size.x + ART_GAP
 
 
-## The slot deck card [param index] was dealt to, forever: 0 is the
-## middle, odd cards fan left (negative), even cards fan right.
-static func fixed_slot(index: int) -> int:
-	if index == 0:
-		return 0
-	if index % 2 == 1:
-		return -((index + 1) / 2)
-	return index / 2
+## How far from the middle of the strip card [param index] sits:
+## negative is left. Cards keep deck order reading left to right, with
+## card 0 in the middle and the tail wrapped around to the left, sides
+## as even as the count allows.
+static func strip_offset(index: int, count: int) -> int:
+	var rights := (count - 1) / 2
+	return index if index <= rights else index - count
 
 
-## Steps between two cards along the ring, the short way around. The
-## ring wraps: with three cards the outer two are both one step from
-## either of the middle ones.
+## Steps between two cards the short way around the circular deck.
 static func ring_distance(a: int, b: int, count: int) -> int:
-	var walk := absi(_ring_place(a, count) - _ring_place(b, count))
+	var walk := absi(a - b)
 	return mini(walk, count - walk)
-
-
-## Where a card sits in the ring, counting left to right, so the wrap
-## in [method ring_distance] joins the two outermost cards.
-static func _ring_place(index: int, count: int) -> int:
-	return fixed_slot(index) + ceili((count - 1) / 2.0)
-
-
-## Center of a slot, from the card_small_display guide layer: the 9px
-## middle centers on x=96, the 7px slots on 87 and 105, then 5px slots
-## every 6px outward.
-func _slot_center(slot: int) -> float:
-	match slot:
-		0:
-			return 96.5
-		1:
-			return 105.5
-		-1:
-			return 87.5
-	if slot > 1:
-		return 112.5 + SLOT_STEP * (slot - 2)
-	return 80.5 - SLOT_STEP * (-slot - 2)
