@@ -1,23 +1,26 @@
 # Elements
 
-The ten elements of the world. Kept from the first card-game draft because they
-carry the worldbuilding; everything else about that draft was dropped.
+The nine elements of the world. Kept from the first card-game draft because they
+carry the worldbuilding; everything else about that draft was dropped. Sand was
+cut from the final list on 2026-08-07 (it stays as a map biome).
 
-| Element |
-| --- |
-| Fire |
-| Water |
-| Air |
-| Earth |
-| Sand |
-| Smoke |
-| Wood |
-| Hunger |
-| Thunder |
-| Null |
+Each element has a 12x12 icon in `assets/interface/icons/elements.png`, in this
+tile order:
 
-`Sand` and `Water` also appear as map biomes in `script/map/Tile.gd`, so the
-biome and element vocabularies partly overlap.
+| # | Element |
+| --- | --- |
+| 0 | Fire |
+| 1 | Air |
+| 2 | Water |
+| 3 | Earth |
+| 4 | Thunder |
+| 5 | Hunger |
+| 6 | Wood |
+| 7 | Smoke |
+| 8 | Null |
+
+`Water` also appears as a map biome in `script/map/Tile.gd` (as does `Sand`,
+which is biome-only now), so the biome and element vocabularies partly overlap.
 
 ---
 
