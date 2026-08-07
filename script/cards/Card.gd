@@ -53,9 +53,11 @@ func _show_element_icon() -> void:
 ## Cards travel through decklists and the save file as JSON-safe
 ## dictionaries: {"name": ..., "description": ..., "element": "fire"}.
 func apply_data(data: Dictionary) -> void:
-	card_name = String(data.get("name", card_name))
-	description = String(data.get("description", description))
-	element = element_from_name(String(data.get("element", "null")))
+	# str() rather than String(): decklists come from JSON, and a number
+	# where text was expected should print, not crash.
+	card_name = str(data.get("name", card_name))
+	description = str(data.get("description", description))
+	element = element_from_name(str(data.get("element", "null")))
 
 
 func to_data() -> Dictionary:

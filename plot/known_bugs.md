@@ -36,6 +36,32 @@ means later:
 To untangle: make a new inherited scene of `scenes/map.tscn`, copy the
 `tile_map_data` across, and re-add the transition.
 
+### 3. The pixel font draws some characters wrong
+
+TinyPixels renders `f` as `r` and `l` as `I`, and has no apostrophe or
+period — those draw as missing-glyph boxes. Visible on every card:
+"follows" comes out "rollows". It looks like the image-font character
+mapping in `TinyPixels.png.import` does not match the glyph grid in
+`TinyPixels.aseprite`. The starter deck's descriptions dodge punctuation
+on purpose until this is fixed. Font is Fauna's asset, so left alone.
+
+### 4. Descenders on the last description line sit on the frame
+
+The font's real line height is 11px at size 8, so the four description
+lines exactly fill the 44px text plate, and letters like g or y on the
+fourth line touch the plate's bottom edge. Options: give the plate a
+couple more pixels in `card_base.aseprite`, cap the label at three
+lines, or tighten the font's line height. Which one is an art call.
+
+### 5. E swaps the card lists when they disagree
+
+E toggles each list separately. Once a cardbox click leaves one list
+open and the other closed, every E press swaps them instead of lining
+them up. If E should mean "all cards out / all cards away", it needs to
+look at both lists first — open both if any is closed, close both
+otherwise. Small change, but it is a design call, so logged instead of
+guessed at.
+
 ## Limitations, not bugs
 
 These are known gaps, listed so they are not re-reported as bugs.
@@ -50,6 +76,13 @@ These are known gaps, listed so they are not re-reported as bugs.
   coastline tile can appear cut off at the edge of explored ground.
 - **No confirmation on the cheat menu's reset.** It wipes the save the instant it
   is clicked, by design.
+- **The terrain list deals placeholder cards.** The right panel is meant to show
+  the terrain the player stands on, but nothing reads the biome under the player
+  yet, so it shows CARD 1–6 until that system exists.
+- **Cards are transparent to the world behind them.** The map and the cloud
+  background show through the card's inner regions, same as they do through the
+  interface skeleton. If a card should fully block what is behind it, the card
+  art needs an opaque backing layer.
 
 ## Gotchas worth remembering
 
@@ -62,3 +95,8 @@ These are known gaps, listed so they are not re-reported as bugs.
 - **`MapTransition.destination` accepts both** a `res://` path and a `uid://`
   reference. The editor's file picker writes uids, which is better — they survive
   moving the file.
+- **Typed node exports in hand-written `.tscn` need `node_paths`.** Writing
+  `list = NodePath("../sibling")` on a node entry does nothing for an
+  `@export var list: SomeNode` unless the node header also carries
+  `node_paths=PackedStringArray("list")` — without it the export silently stays
+  null. The editor writes it automatically; by hand it is easy to miss.
