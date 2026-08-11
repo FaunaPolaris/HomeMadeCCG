@@ -1,5 +1,9 @@
 extends Node
 
+## The focused entity stands on a new cell — after a step, a map change or a
+## change of focus. Displays that follow the player listen here.
+signal player_moved(cell : Vector2i)
+
 ## Size of one map cell, in map-local pixels.
 ## The map is drawn at this scale; the on-screen size comes from the parent's scale.
 const TILE_SIZE := 32
@@ -47,6 +51,7 @@ func	refresh_view() -> void:
 		return
 	current_map.position = -Vector2(player_entity.map_position) * TILE_SIZE
 	current_map.reveal_around(player_entity.map_position, player_entity.vision_range)
+	player_moved.emit(player_entity.map_position)
 
 
 ## Called whenever an entity finishes a step. Only the focused entity triggers
@@ -54,6 +59,9 @@ func	refresh_view() -> void:
 func	entity_entered_cell(entity : Entity) -> void:
 	if entity != player_entity or current_map == null:
 		return
+	# Every step the player takes costs a day. The step onto a doorway is the
+	# one that pays for the travel — arriving on the other side is not a step.
+	Calendar.advance_day()
 	var transition := current_map.transition_at(entity.map_position)
 	if transition != null:
 		travel(transition)

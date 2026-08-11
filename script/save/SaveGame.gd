@@ -69,6 +69,7 @@ func	clear() -> void:
 	current_map_path = ""
 	player_cell = Vector2i.ZERO
 	player_deck = []
+	Calendar.days_passed = 0
 
 
 ## Forgets everything and deletes the save from disk, leaving nothing for the
@@ -98,6 +99,7 @@ func	save_to_disk() -> Error:
 		"version": FORMAT_VERSION,
 		"current_map": current_map_path,
 		"player_cell": cell_to_key(player_cell),
+		"days_passed": Calendar.days_passed,
 		"deck": player_deck,
 		"maps": _maps,
 	}
@@ -145,6 +147,8 @@ func	load_from_disk() -> Error:
 
 	current_map_path = String(parsed.get("current_map", ""))
 	player_cell = key_to_cell(String(parsed.get("player_cell", "0,0")))
+	# Saves from before the calendar existed simply start on the first day.
+	Calendar.days_passed = int(parsed.get("days_passed", 0))
 	# Saves from before the deck existed simply have no "deck" key; an
 	# empty deck makes the game deal the starter decklist again.
 	var deck : Variant = parsed.get("deck", [])

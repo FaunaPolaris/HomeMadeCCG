@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*uid://ckehari658oij"
 SaveGame="*res://script/save/SaveGame.gd"
+Calendar="*res://script/Calendar.gd"
 
 [display]
 
