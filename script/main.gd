@@ -6,6 +6,9 @@ const STARTING_MAP := "res://scenes/maps/temple.tscn"
 ## Where the player stands in [constant STARTING_MAP] at the start of a new game.
 const STARTING_CELL := Vector2i.ZERO
 
+## The deck a player starts with before the save holds one of their own.
+const STARTER_DECK := "res://resources/decks/starter_deck.json"
+
 
 func _ready() -> void:
 	var map_path := STARTING_MAP
@@ -27,3 +30,15 @@ func _ready() -> void:
 
 	SaveGame.current_map_path = map_path
 	SaveGame.player_cell = player_cell
+
+	if SaveGame.player_deck.is_empty():
+		SaveGame.player_deck = _read_decklist(STARTER_DECK)
+	$player_deck.load_deck(SaveGame.player_deck)
+
+
+func _read_decklist(path: String) -> Array:
+	var json : JSON = load(path)
+	if json == null or not json.data is Array:
+		push_error("main: '%s' is not a decklist." % path)
+		return []
+	return json.data

@@ -1,0 +1,11 @@
+[
+	{ "name": "EMBER", "description": "A little flame that remembers its bonfire", "element": "fire" },
+	{ "name": "GUST", "description": "A pocket of wind that will not settle", "element": "air" },
+	{ "name": "DEW", "description": "Morning water gathered one drop at a time", "element": "water" },
+	{ "name": "PEBBLE", "description": "A stubborn piece of an old mountain", "element": "earth" },
+	{ "name": "STATIC", "description": "A crackle waiting for somewhere to land", "element": "thunder" },
+	{ "name": "MAW", "description": "An appetite with nothing else around it", "element": "hunger" },
+	{ "name": "SAPLING", "description": "A tree still deciding where to stand", "element": "wood" },
+	{ "name": "ASH", "description": "What the fire left when it moved along", "element": "smoke" },
+	{ "name": "HOLLOW", "description": "A quiet space where an element should be", "element": "null" }
+]
