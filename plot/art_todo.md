@@ -41,6 +41,13 @@ shows through them. Nothing to paint.
 - [ ] **A font.** `TinyPixels.png` was deleted with the card UI; the
       `.aseprite` source is still there. Any on-screen text needs it re-exported.
 
+- [ ] **Comma and width for the waila's calendar.** The date text needs a
+      comma glyph (and `,` added to the `character_ranges` in
+      `TinyPixels.png.import`), and the full format needs up to 200px while
+      the plate's text area is 127px — see known_bugs #6 for the numbers.
+      Wider plate, narrower glyphs or a shorter format; the code renders
+      whatever fits once one is chosen.
+
 - [ ] **HUD inside the three panels.** `fullScreen.aseprite` has `base leyout`
       and `mock interface` layers hidden. Whatever the map HUD becomes has to
       live inside the three portrait columns for the mobile port.

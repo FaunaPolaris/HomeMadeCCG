@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b01fnj4tmxhq1" path="res://scenes/cards/card_list.tscn" id="7_cardlist"]
 [ext_resource type="PackedScene" uid="uid://s6nf1u3yofrv" path="res://scenes/cards/cardbox.tscn" id="8_cardbox"]
 [ext_resource type="PackedScene" uid="uid://b4w8lmqur3gif" path="res://scenes/cards/deck_display.tscn" id="9_display"]
+[ext_resource type="PackedScene" path="res://scenes/waila.tscn" id="10_waila"]
 
 [sub_resource type="Gradient" id="Gradient_lushf"]
 offsets = PackedFloat32Array(0.1456693, 0.16929133, 0.22047244, 0.22834645, 0.42125985, 0.46456692, 0.5511811, 0.8543307)
@@ -81,7 +82,9 @@ texture = ExtResource("1_7fvvs")
 
 [node name="cheat_menu" parent="." unique_id=1993027544 instance=ExtResource("2_cheat")]
 
-[node name="player_deck" parent="." instance=ExtResource("7_cardlist")]
+[node name="player_deck" parent="." unique_id=1256972796 instance=ExtResource("7_cardlist")]
+layout_mode = 3
+anchors_preset = 0
 offset_left = -300.0
 offset_top = -164.0
 offset_right = -108.0
@@ -90,7 +93,9 @@ placeholder_cards = 0
 slide_when_closed = Vector2(0, 344)
 open = false
 
-[node name="terrain_cards" parent="." instance=ExtResource("7_cardlist")]
+[node name="terrain_cards" parent="." unique_id=920344339 instance=ExtResource("7_cardlist")]
+layout_mode = 3
+anchors_preset = 0
 offset_left = 108.0
 offset_top = -164.0
 offset_right = 300.0
@@ -98,30 +103,40 @@ offset_bottom = 124.0
 slide_when_closed = Vector2(0, -344)
 open = false
 
-[node name="cardbox_left" parent="." node_paths=PackedStringArray("list") instance=ExtResource("8_cardbox")]
+[node name="cardbox_left" parent="." unique_id=1432871754 node_paths=PackedStringArray("list") instance=ExtResource("8_cardbox")]
 offset_left = -220.0
 offset_top = 129.0
 offset_right = -188.0
 offset_bottom = 161.0
 list = NodePath("../player_deck")
 
-[node name="cardbox_right" parent="." node_paths=PackedStringArray("list") instance=ExtResource("8_cardbox")]
+[node name="cardbox_right" parent="." unique_id=1737280761 node_paths=PackedStringArray("list") instance=ExtResource("8_cardbox")]
 offset_left = 188.0
 offset_top = 129.0
 offset_right = 220.0
 offset_bottom = 161.0
 list = NodePath("../terrain_cards")
 
-[node name="deck_display" parent="." node_paths=PackedStringArray("list") instance=ExtResource("9_display")]
+[node name="deck_display" parent="." unique_id=1362918701 node_paths=PackedStringArray("list") instance=ExtResource("9_display")]
+layout_mode = 3
+anchors_preset = 0
 offset_left = -301.0
 offset_top = 162.0
 offset_right = -108.0
 offset_bottom = 171.0
 list = NodePath("../player_deck")
 
-[node name="terrain_display" parent="." node_paths=PackedStringArray("list") instance=ExtResource("9_display")]
+[node name="terrain_display" parent="." unique_id=1256836403 node_paths=PackedStringArray("list") instance=ExtResource("9_display")]
+layout_mode = 3
+anchors_preset = 0
 offset_left = 108.0
 offset_top = 162.0
 offset_right = 301.0
 offset_bottom = 171.0
 list = NodePath("../terrain_cards")
+
+[node name="waila" parent="." instance=ExtResource("10_waila")]
+offset_left = -102.0
+offset_top = -173.0
+offset_right = 102.0
+offset_bottom = -155.0

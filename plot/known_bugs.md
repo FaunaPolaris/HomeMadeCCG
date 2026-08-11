@@ -4,6 +4,7 @@ Things that are wrong or will bite later. Maps are Fauna's to edit, so map
 problems get listed here rather than fixed.
 
 Last checked against the maps on 2026-08-06.
+Waila and calendar entries checked on 2026-08-11.
 
 ## Open
 
@@ -61,6 +62,18 @@ them up. If E should mean "all cards out / all cards away", it needs to
 look at both lists first — open both if any is closed, close both
 otherwise. Small change, but it is a design call, so logged instead of
 guessed at.
+
+### 6. The calendar text cannot fit its plate
+
+The waila's date format is longer than the calendar plate. The plate's text
+area is 127px; TinyPixels is monospace at 8px per glyph (size 8), so the
+shortest possible date, "1,1, Follia of year 1", is 168px, and the longest,
+"24,16, Fatigue of year 12", is 200px. The label clips, so today it reads
+"1,1, Follia of y". No format squeezes under 127px without losing a part —
+"24,16 Fatigue" (104px) is about the ceiling. The outs are a wider plate,
+narrower glyphs in the font update, or a shorter format; all three are art
+or design calls, so logged instead of guessed at. Until the same font update
+lands a comma glyph, the commas also draw as missing-glyph boxes.
 
 ## Limitations, not bugs
 

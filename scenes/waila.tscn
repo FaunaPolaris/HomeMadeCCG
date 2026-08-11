@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://script/Waila.gd" id="1_waila"]
+[ext_resource type="Texture2D" path="res://assets/interface/waila/position_frame.png" id="2_posf"]
+[ext_resource type="Texture2D" path="res://assets/interface/waila/position_numbers.png" id="3_posn"]
+[ext_resource type="Texture2D" path="res://assets/interface/waila/calendar_frame.png" id="4_calf"]
+[ext_resource type="Texture2D" path="res://assets/interface/waila/season_text.png" id="5_seat"]
+[ext_resource type="LabelSettings" uid="uid://dyjtyjakfxgxq" path="res://resources/label/body_text.tres" id="6_body"]
+
+[node name="waila" type="Control"]
+texture_filter = 1
+z_index = 6
+custom_minimum_size = Vector2(204, 18)
+offset_right = 204.0
+offset_bottom = 18.0
+mouse_filter = 2
+script = ExtResource("1_waila")
+
+[node name="position_frame" type="TextureRect" parent="."]
+offset_right = 56.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = ExtResource("2_posf")
+
+[node name="position_numbers" type="TextureRect" parent="."]
+offset_right = 56.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = ExtResource("3_posn")
+
+[node name="x_label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 15.0
+offset_top = 7.0
+offset_right = 32.0
+offset_bottom = 18.0
+text = "00"
+label_settings = ExtResource("6_body")
+horizontal_alignment = 1
+clip_text = true
+
+[node name="y_label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 35.0
+offset_top = 7.0
+offset_right = 52.0
+offset_bottom = 18.0
+text = "00"
+label_settings = ExtResource("6_body")
+horizontal_alignment = 1
+clip_text = true
+
+[node name="calendar_frame" type="TextureRect" parent="."]
+offset_left = 57.0
+offset_right = 204.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = ExtResource("4_calf")
+
+[node name="season_text" type="TextureRect" parent="."]
+offset_left = 57.0
+offset_right = 204.0
+offset_bottom = 18.0
+mouse_filter = 2
+texture = ExtResource("5_seat")
+
+[node name="calendar_label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 60.0
+offset_top = 3.0
+offset_right = 187.0
+offset_bottom = 15.0
+text = "1,1, Follia of year 1"
+label_settings = ExtResource("6_body")
+clip_text = true
